@@ -1,9 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
+
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\StockAdjustmentController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\UserController;
+
 use App\Models\Obat;
 use App\Models\Transaksi;
 
@@ -46,129 +53,386 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     | DASHBOARD
     |--------------------------------------------------------------------------
+    | ADMIN + KASIR
     */
 
-    Route::get('/dashboard', function () {
+    Route::middleware('role:admin,kasir')->group(function () {
 
-        $totalObat = Obat::count();
+        Route::get('/dashboard', function () {
 
-        $totalStok = Obat::sum('stok');
+            $totalObat = Obat::count();
 
-        $totalTransaksiHariIni = Transaksi::whereDate(
-            'created_at',
-            today()
-        )->count();
+            $totalStok = Obat::sum('stok');
 
-        $pendapatanHariIni = Transaksi::whereDate(
-            'created_at',
-            today()
-        )->sum('total_harga');
+            $totalTransaksiHariIni = Transaksi::whereDate(
+                'created_at',
+                today()
+            )->count();
 
-        $stokMenipis = Obat::where('stok', '<', 20)
-            ->count();
+            $pendapatanHariIni = Transaksi::whereDate(
+                'created_at',
+                today()
+            )->sum('total_harga');
 
-        $stokHabis = Obat::where('stok', 0)
-            ->count();
+            /*
+            |--------------------------------------------------------------------------
+            | STOK MENIPIS
+            |--------------------------------------------------------------------------
+            */
 
-        $obatTerbaru = Obat::latest()
-            ->take(5)
-            ->get();
+            $stokMenipis = Obat::whereColumn('stok', '<=', 'minimum_stok')
+                ->where('stok', '>', 0)
+                ->count();
 
-        $obatMenipis = Obat::where('stok', '<', 20)
-            ->orderBy('stok', 'asc')
-            ->take(5)
-            ->get();
+            /*
+            |--------------------------------------------------------------------------
+            | STOK HABIS
+            |--------------------------------------------------------------------------
+            */
 
-        $transaksiTerbaru = Transaksi::latest()
-            ->take(5)
-            ->get();
+            $stokHabis = Obat::where('stok', 0)
+                ->count();
 
-        return view('dashboard', compact(
-            'totalObat',
-            'totalStok',
-            'totalTransaksiHariIni',
-            'pendapatanHariIni',
-            'stokMenipis',
-            'stokHabis',
-            'obatTerbaru',
-            'obatMenipis',
-            'transaksiTerbaru'
-        ));
+            /*
+            |--------------------------------------------------------------------------
+            | AKAN EXPIRED
+            |--------------------------------------------------------------------------
+            */
+
+            $akanExpired = Obat::whereNotNull('tanggal_kadaluarsa')
+                ->whereDate('tanggal_kadaluarsa', '>=', today())
+                ->whereDate(
+                    'tanggal_kadaluarsa',
+                    '<=',
+                    today()->addDays(30)
+                )
+                ->count();
+
+            /*
+            |--------------------------------------------------------------------------
+            | OBAT TERBARU
+            |--------------------------------------------------------------------------
+            */
+
+            $obatTerbaru = Obat::latest()
+                ->take(5)
+                ->get();
+
+            /*
+            |--------------------------------------------------------------------------
+            | DAFTAR OBAT MENIPIS
+            |--------------------------------------------------------------------------
+            */
+
+            $obatMenipis = Obat::whereColumn('stok', '<=', 'minimum_stok')
+                ->where('stok', '>', 0)
+                ->orderBy('stok', 'asc')
+                ->take(5)
+                ->get();
+
+            /*
+            |--------------------------------------------------------------------------
+            | TRANSAKSI TERBARU
+            |--------------------------------------------------------------------------
+            */
+
+            $transaksiTerbaru = Transaksi::latest()
+                ->take(5)
+                ->get();
+
+            return view('dashboard', compact(
+                'totalObat',
+                'totalStok',
+                'totalTransaksiHariIni',
+                'pendapatanHariIni',
+                'stokMenipis',
+                'stokHabis',
+                'akanExpired',
+                'obatTerbaru',
+                'obatMenipis',
+                'transaksiTerbaru'
+            ));
+
+        })->name('dashboard');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | KASIR
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/kasir', function () {
+
+            $obat = Obat::where('stok', '>', 0)
+                ->orderBy('nama_obat', 'asc')
+                ->get();
+
+            return view('kasir', compact('obat'));
+
+        })->name('kasir');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | TRANSAKSI
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/transaksi', [TransaksiController::class, 'index'])
+            ->name('transaksi.index');
+
+        Route::post('/transaksi/proses', [TransaksiController::class, 'proses'])
+            ->name('transaksi.proses');
+
+        Route::get('/transaksi/{id}', [TransaksiController::class, 'detail'])
+            ->name('transaksi.detail');
+
     });
 
 
     /*
     |--------------------------------------------------------------------------
-    | OBAT
+    | ADMIN ONLY
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/obat', [ObatController::class, 'index'])
-        ->name('obat.index');
+    Route::middleware('role:admin')->group(function () {
 
-    Route::get('/obat/create', [ObatController::class, 'create'])
-        ->name('obat.create');
+        /*
+        |--------------------------------------------------------------------------
+        | HAPUS TRANSAKSI
+        |--------------------------------------------------------------------------
+        */
 
-    Route::post('/obat', [ObatController::class, 'store'])
-        ->name('obat.store');
-
-    Route::get('/obat/{id}/edit', [ObatController::class, 'edit'])
-        ->name('obat.edit');
-
-    Route::put('/obat/{id}', [ObatController::class, 'update'])
-        ->name('obat.update');
-
-    Route::delete('/obat/{id}', [ObatController::class, 'destroy'])
-        ->name('obat.destroy');
+        Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])
+            ->name('transaksi.destroy');
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | KASIR
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | OBAT
+        |--------------------------------------------------------------------------
+        */
 
-    Route::get('/kasir', function () {
+        Route::get('/obat', [ObatController::class, 'index'])
+            ->name('obat.index');
 
-        $obat = Obat::where('stok', '>', 0)
-            ->orderBy('nama_obat', 'asc')
-            ->get();
+        Route::get('/obat/create', [ObatController::class, 'create'])
+            ->name('obat.create');
 
-        return view('kasir', compact('obat'));
+        Route::post('/obat', [ObatController::class, 'store'])
+            ->name('obat.store');
 
-    })->name('kasir');
+        Route::get('/obat/{id}/edit', [ObatController::class, 'edit'])
+            ->name('obat.edit');
 
+        Route::put('/obat/{id}', [ObatController::class, 'update'])
+            ->name('obat.update');
 
-    /*
-    |--------------------------------------------------------------------------
-    | TRANSAKSI
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/transaksi', [TransaksiController::class, 'index'])
-        ->name('transaksi.index');
-
-    Route::post('/transaksi/proses', [TransaksiController::class, 'proses'])
-        ->name('transaksi.proses');
-
-    Route::get('/transaksi/{id}', [TransaksiController::class, 'detail'])
-        ->name('transaksi.detail');
-
-    Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])
-        ->name('transaksi.destroy');
+        Route::delete('/obat/{id}', [ObatController::class, 'destroy'])
+            ->name('obat.destroy');
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | LAPORAN
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | KATEGORI
+        |--------------------------------------------------------------------------
+        */
 
-    Route::get('/laporan', [TransaksiController::class, 'laporan'])
-        ->name('laporan');
+        Route::resource('kategori', KategoriController::class)
+            ->except(['show']);
 
-    Route::get('/pengaturan', function () {
-    return view('pengaturan');
-                                            })->name('pengaturan');
+
+        /*
+        |--------------------------------------------------------------------------
+        | STOCK ADJUSTMENT
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/stock-adjustment', [StockAdjustmentController::class, 'index'])
+            ->name('stock-adjustment.index');
+
+        Route::post('/stock-adjustment', [StockAdjustmentController::class, 'store'])
+            ->name('stock-adjustment.store');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | LAPORAN PENJUALAN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/laporan', [TransaksiController::class, 'laporan'])
+            ->name('laporan');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | LAPORAN STOK
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/laporan-stok', [LaporanController::class, 'stok'])
+            ->name('laporan.stok');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PENGATURAN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/pengaturan', function () {
+
+            return view('pengaturan', [
+                'namaApotek' => session('nama_apotek', 'Apotek Besok Sembuh'),
+                'nomorTelepon' => session('nomor_telepon', ''),
+                'batasStok' => session('batas_stok', 20),
+            ]);
+
+        })->name('pengaturan');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SIMPAN PROFIL ADMIN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post('/pengaturan/profil', function () {
+
+            $request = request();
+
+            $request->validate([
+                'name' => 'required|string|max:255',
+            ]);
+
+            $user = auth()->user();
+
+            $user->name = $request->name;
+            $user->save();
+
+            return redirect()
+                ->route('pengaturan')
+                ->with('success_profil', 'Profil admin berhasil diperbarui.');
+
+        })->name('pengaturan.profil');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SIMPAN INFORMASI APOTEK
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post('/pengaturan/apotek', function () {
+
+            $request = request();
+
+            $request->validate([
+                'nama_apotek' => 'required|string|max:255',
+                'nomor_telepon' => 'nullable|string|max:30',
+            ]);
+
+            session([
+                'nama_apotek' => $request->nama_apotek,
+                'nomor_telepon' => $request->nomor_telepon,
+            ]);
+
+            return redirect()
+                ->route('pengaturan')
+                ->with('success_apotek', 'Informasi apotek berhasil disimpan.');
+
+        })->name('pengaturan.apotek');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SIMPAN BATAS STOK
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post('/pengaturan/stok', function () {
+
+            $request = request();
+
+            $request->validate([
+                'batas_stok' => 'required|integer|min:0',
+            ]);
+
+            session([
+                'batas_stok' => $request->batas_stok,
+            ]);
+
+            return redirect()
+                ->route('pengaturan')
+                ->with('success_stok', 'Batas stok berhasil diperbarui.');
+
+        })->name('pengaturan.stok');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | UBAH PASSWORD
+        |--------------------------------------------------------------------------
+        */
+
+        Route::post('/pengaturan/password', function () {
+
+            $request = request();
+
+            $request->validate([
+                'password_lama' => 'required',
+                'password_baru' => 'required|string|min:8|confirmed',
+            ]);
+
+            $user = auth()->user();
+
+            if (!Hash::check($request->password_lama, $user->password)) {
+                return back()
+                    ->withErrors([
+                        'password_lama' => 'Password lama tidak sesuai.'
+                    ])
+                    ->withInput();
+            }
+
+            $user->password = Hash::make($request->password_baru);
+            $user->save();
+
+            return redirect()
+                ->route('pengaturan')
+                ->with('success_password', 'Password berhasil diubah.');
+
+        })->name('pengaturan.password');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADMIN USER
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/users', [UserController::class, 'index'])
+            ->name('users.index');
+
+        Route::get('/users/create', [UserController::class, 'create'])
+            ->name('users.create');
+
+        Route::post('/users', [UserController::class, 'store'])
+            ->name('users.store');
+
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])
+            ->name('users.edit');
+
+        Route::put('/users/{user}', [UserController::class, 'update'])
+            ->name('users.update');
+
+        Route::patch('/users/{user}', [UserController::class, 'update']);
+
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])
+            ->name('users.destroy');
+
+    });
 
 });

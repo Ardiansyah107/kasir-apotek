@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Tambah Obat - Apotek Sehat</title>
+    <title>Tambah Obat - Apotek Besok Sembuh</title>
 
     <style>
         * {
@@ -15,9 +15,64 @@
             font-family: Arial, sans-serif;
         }
 
+        :root {
+            --bg: #061713;
+            --bg-soft: #081d18;
+            --sidebar: #05120f;
+            --sidebar-2: #071b17;
+            --sidebar-border: rgba(255, 255, 255, .065);
+
+            --surface: #0b211c;
+            --surface-2: #0e2923;
+            --surface-3: #12332b;
+
+            --text: #ecfdf5;
+            --text-soft: #c7e5d9;
+            --muted: #8baea2;
+            --muted-2: #63867b;
+
+            --primary: #10b981;
+            --primary-light: #34d399;
+            --primary-dark: #047857;
+            --teal: #14b8a6;
+            --cyan: #22d3ee;
+            --blue: #3b82f6;
+            --orange: #f59e0b;
+            --red: #ef4444;
+            --purple: #a855f7;
+
+            --border: rgba(255, 255, 255, .075);
+            --border-green: rgba(16, 185, 129, .18);
+
+            --shadow: 0 10px 35px rgba(0, 0, .18);
+            --shadow-hover: 0 18px 40px rgba(0, 0, .28);
+
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 18px;
+            --radius-xl: 22px;
+        }
+
         body {
-            background: #f4f7fb;
-            color: #1f2937;
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 85% 0%,
+                    rgba(16, 185, 129, .11),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 15% 100%,
+                    rgba(20, 184, 166, .07),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--bg) 0%,
+                    var(--bg-soft) 50%,
+                    #061713 100%
+                );
+            color: var(--text);
         }
 
         .layout {
@@ -25,120 +80,288 @@
             min-height: 100vh;
         }
 
-        /* SIDEBAR */
+        /* =========================
+           SIDEBAR
+        ========================= */
+
         .sidebar {
-            width: 240px;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
-            padding: 25px 18px;
+            width: 255px;
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--sidebar-2) 0%,
+                    var(--sidebar) 100%
+                );
+            border-right: 1px solid var(--sidebar-border);
+            padding: 24px 16px;
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
+            z-index: 100;
+            overflow: hidden;
+            box-shadow: 8px 0 30px rgba(0, 0, .10);
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 4px 9px;
+            margin-bottom: 34px;
+            color: var(--text);
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.2px;
+        }
+
+        .logo-icon {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    var(--primary-dark)
+                );
+            color: white;
+            border-radius: 13px;
             font-size: 21px;
-            font-weight: bold;
-            margin-bottom: 35px;
-            padding-left: 10px;
+            box-shadow:
+                0 8px 25px rgba(16, 185, 129, .20),
+                inset 0 1px 0 rgba(255, 255, 255, .14);
         }
 
         .logo span {
-            color: #16a34a;
+            color: var(--primary-light);
+        }
+
+        .logo small {
+            display: block;
+            margin-top: 3px;
+            color: #63867b;
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 1.1px;
         }
 
         .menu-title {
-            font-size: 11px;
-            color: #9ca3af;
-            margin: 20px 10px 10px;
+            margin: 23px 10px 9px;
+            color: #55786e;
+            font-size: 9px;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.6px;
         }
 
-        .menu a {
-            display: block;
-            text-decoration: none;
-            color: #6b7280;
-            padding: 12px 14px;
+        .menu a,
+        .menu button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 11px 13px;
             margin-bottom: 5px;
-            border-radius: 9px;
-            font-size: 14px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            color: #83a399;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition:
+                background .2s ease,
+                color .2s ease,
+                border .2s ease,
+                transform .2s ease;
         }
 
-        .menu a:hover {
-            background: #f0fdf4;
-            color: #16a34a;
+        .menu a:hover,
+        .menu button:hover {
+            background: rgba(16, 185, 129, .065);
+            border-color: rgba(16, 185, 129, .08);
+            color: #d1fae5;
+            transform: translateX(3px);
         }
 
         .menu a.active {
-            background: #dcfce7;
-            color: #15803d;
-            font-weight: bold;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(16, 185, 129, .19),
+                    rgba(20, 184, 166, .055)
+                );
+            border-color: rgba(16, 185, 129, .17);
+            color: var(--primary-light);
+            box-shadow:
+                inset 3px 0 0 var(--primary),
+                0 5px 18px rgba(0, 0, .08);
         }
 
-        /* CONTENT */
+        .menu-icon {
+            width: 25px;
+            min-width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .menu form {
+            margin: 0;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
         .content {
-            margin-left: 240px;
-            width: calc(100% - 240px);
-            padding: 35px;
+            margin-left: 255px;
+            width: calc(100% - 255px);
+            min-height: 100vh;
+            padding: 30px 38px 45px;
         }
 
         .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .page-title h1 {
+            color: var(--text);
             font-size: 27px;
-            margin-bottom: 7px;
+            margin-bottom: 6px;
         }
 
         .page-title p {
-            color: #6b7280;
+            color: var(--muted);
             font-size: 14px;
         }
 
         .admin {
-            background: white;
-            padding: 10px 16px;
-            border-radius: 10px;
-            border: 1px solid #e5e7eb;
-            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(14, 41, 35, .85);
+            padding: 9px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-size: 13px;
+            box-shadow: var(--shadow);
         }
 
-        /* FORM CARD */
+        .admin-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, .15);
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .admin-info strong {
+            display: block;
+            color: var(--text);
+            font-size: 13px;
+        }
+
+        .admin-info span {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            text-decoration: none;
+            color: var(--primary-light);
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 18px;
+            transition: .2s;
+        }
+
+        .back-link:hover {
+            color: #6ee7b7;
+            transform: translateX(-2px);
+        }
+
+        /* =========================
+           FORM CARD
+        ========================= */
+
         .form-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(14, 41, 35, .96),
+                    rgba(11, 33, 28, .96)
+                );
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             padding: 30px;
-            max-width: 900px;
+            max-width: 1000px;
+            box-shadow: var(--shadow);
         }
 
         .form-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding-bottom: 22px;
             margin-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: rgba(16, 185, 129, .13);
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            border: 1px solid rgba(16, 185, 129, .14);
         }
 
         .form-header h2 {
             font-size: 18px;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
+            color: var(--text);
         }
 
         .form-header p {
-            color: #6b7280;
+            color: var(--muted);
             font-size: 13px;
         }
 
-        /* ERROR */
+        /* =========================
+           ERROR
+        ========================= */
+
         .error-box {
-            background: #fff7ed;
-            border: 1px solid #fed7aa;
-            color: #c2410c;
+            background: rgba(245, 158, 11, .08);
+            border: 1px solid rgba(245, 158, 11, .20);
+            color: #fbbf24;
             padding: 14px 18px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 25px;
             font-size: 13px;
         }
@@ -156,7 +379,25 @@
             margin-bottom: 4px;
         }
 
-        /* FORM */
+        /* =========================
+           SECTION
+        ========================= */
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--text-soft);
+            margin: 25px 0 16px;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -176,90 +417,189 @@
             font-size: 13px;
             font-weight: bold;
             margin-bottom: 8px;
-            color: #374151;
+            color: var(--text-soft);
+        }
+
+        .required {
+            color: #f87171;
         }
 
         input,
         select {
             width: 100%;
             padding: 11px 13px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            border-radius: 9px;
             font-size: 14px;
             outline: none;
-            background: white;
+            background: #081d18;
+            color: var(--text);
+            transition: .2s;
         }
 
         input:focus,
         select:focus {
-            border-color: #16a34a;
-            box-shadow: 0 0 0 3px #dcfce7;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, .12);
         }
 
         input::placeholder {
-            color: #9ca3af;
+            color: var(--muted-2);
         }
 
-        /* ERROR FIELD */
+        select option {
+            background: #0b211c;
+            color: var(--text);
+        }
+
+        .helper {
+            color: var(--muted-2);
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
         .input-error {
-            border-color: #f87171 !important;
+            border-color: #ef4444 !important;
         }
 
         .field-error {
-            color: #dc2626;
+            color: #f87171;
             font-size: 12px;
             margin-top: 5px;
         }
 
-        /* BUTTON */
+        /* =========================
+           ACTION
+        ========================= */
+
         .form-actions {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
             margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e5e7eb;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
         }
 
         .btn-cancel {
             text-decoration: none;
-            color: #6b7280;
-            background: #f3f4f6;
+            color: var(--muted);
+            background: rgba(255, 255, 255, .045);
+            border: 1px solid var(--border);
             padding: 11px 18px;
-            border-radius: 8px;
+            border-radius: 9px;
             font-size: 14px;
+            font-weight: bold;
+            transition: .2s;
         }
 
         .btn-cancel:hover {
-            background: #e5e7eb;
+            background: rgba(255, 255, 255, .08);
+            color: var(--text);
         }
 
         .btn-save {
-            background: #16a34a;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-dark)
+                );
             color: white;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, .08);
             padding: 11px 20px;
-            border-radius: 8px;
+            border-radius: 9px;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, .15);
+            transition: .2s;
         }
 
         .btn-save:hover {
-            background: #15803d;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 25px rgba(16, 185, 129, .22);
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
+        /* =========================
+           RESPONSIVE
+        ========================= */
 
+        @media (max-width: 1400px) {
+            .content {
+                padding-left: 28px;
+                padding-right: 28px;
+            }
+        }
+
+        @media (max-width: 1150px) {
+            .form-card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 800px) {
             .sidebar {
-                width: 190px;
+                width: 215px;
             }
 
             .content {
-                margin-left: 190px;
-                width: calc(100% - 190px);
-                padding: 20px;
+                margin-left: 215px;
+                width: calc(100% - 215px);
+                padding: 22px;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+
+            .admin-info {
+                display: none;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .sidebar {
+                width: 72px;
+                padding: 20px 9px;
+            }
+
+            .logo {
+                justify-content: center;
+                padding: 0;
+            }
+
+            .logo > div:last-child,
+            .menu-title {
+                display: none;
+            }
+
+            .menu a,
+            .menu button {
+                justify-content: center;
+                padding: 12px 5px;
+            }
+
+            .menu-icon {
+                margin: 0;
+            }
+
+            .content {
+                margin-left: 72px;
+                width: calc(100% - 72px);
+                padding: 18px 12px 35px;
+            }
+
+            .topbar {
+                align-items: center;
+            }
+
+            .page-title p {
+                display: none;
+            }
+
+            .page-title h1 {
+                font-size: 20px;
             }
 
             .form-grid {
@@ -268,6 +608,20 @@
 
             .form-group.full {
                 grid-column: span 1;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+
+            .btn-cancel,
+            .btn-save {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -281,7 +635,15 @@
     <aside class="sidebar">
 
         <div class="logo">
-            ✚ <span>Apotek</span> Sehat
+            <div class="logo-icon">✚</div>
+
+            <div>
+                <div>
+                    <span>Apotek</span> Besok Sembuh
+                </div>
+
+                <small>PHARMACY MANAGEMENT</small>
+            </div>
         </div>
 
         <div class="menu-title">
@@ -290,37 +652,88 @@
 
         <div class="menu">
 
-            <a href="/dashboard">
+            <a href="{{ route('dashboard') }}">
+                <span class="menu-icon">🏠</span>
                 Dashboard
             </a>
 
-            <a href="/obat" class="active">
+            <a href="{{ route('obat.index') }}" class="active">
+                <span class="menu-icon">💊</span>
                 Data Obat
             </a>
 
-            <a href="#">
+            @if(auth()->user()->role === 'admin')
+
+                <a href="{{ route('users.index') }}">
+                    <span class="menu-icon">👥</span>
+                    Admin User
+                </a>
+
+                <a href="{{ route('kategori.index') }}">
+                    <span class="menu-icon">🗂️</span>
+                    Kategori
+                </a>
+
+                <a href="{{ route('stock-adjustment.index') }}">
+                    <span class="menu-icon">📦</span>
+                    Stock Adjustment
+                </a>
+
+            @endif
+
+            <a href="{{ route('kasir') }}">
+                <span class="menu-icon">🛒</span>
                 Kasir
             </a>
 
-            <a href="#">
+            <a href="{{ route('transaksi.index') }}">
+                <span class="menu-icon">🧾</span>
                 Transaksi
             </a>
 
-            <a href="#">
-                Laporan
-            </a>
+            @if(auth()->user()->role === 'admin')
+
+                <a href="{{ route('laporan') }}">
+                    <span class="menu-icon">📊</span>
+                    Laporan Penjualan
+                </a>
+
+                <a href="{{ route('laporan.stok') }}">
+                    <span class="menu-icon">📦</span>
+                    Laporan Stok
+                </a>
+
+            @endif
 
         </div>
 
-        <div class="menu-title">
-            Pengaturan
-        </div>
+        @if(auth()->user()->role === 'admin')
+
+            <div class="menu-title">
+                Pengaturan
+            </div>
+
+            <div class="menu">
+
+                <a href="{{ route('pengaturan') }}">
+                    <span class="menu-icon">⚙️</span>
+                    Pengaturan
+                </a>
+
+            </div>
+
+        @endif
 
         <div class="menu">
 
-            <a href="#">
-                Pengaturan
-            </a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+
+                <button type="submit">
+                    <span class="menu-icon">🚪</span>
+                    Logout
+                </button>
+            </form>
 
         </div>
 
@@ -334,9 +747,7 @@
 
             <div class="page-title">
 
-                <h1>
-                    Tambah Obat
-                </h1>
+                <h1>Tambah Obat</h1>
 
                 <p>
                     Tambahkan obat baru ke dalam persediaan apotek
@@ -345,10 +756,31 @@
             </div>
 
             <div class="admin">
-                Admin
+
+                <div class="admin-avatar">
+                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                </div>
+
+                <div class="admin-info">
+
+                    <strong>
+                        {{ auth()->user()->name }}
+                    </strong>
+
+                    <span>
+                        {{ ucfirst(auth()->user()->role) }}
+                    </span>
+
+                </div>
+
             </div>
 
         </div>
+
+
+        <a href="{{ route('obat.index') }}" class="back-link">
+            ← Kembali ke Data Obat
+        </a>
 
 
         <!-- FORM CARD -->
@@ -356,13 +788,21 @@
 
             <div class="form-header">
 
-                <h2>
-                    Informasi Obat
-                </h2>
+                <div class="form-icon">
+                    ➕
+                </div>
 
-                <p>
-                    Lengkapi informasi obat dengan benar
-                </p>
+                <div>
+
+                    <h2>
+                        Tambah Data Obat
+                    </h2>
+
+                    <p>
+                        Lengkapi informasi obat dengan benar sebelum menyimpan.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -373,7 +813,7 @@
                 <div class="error-box">
 
                     <strong>
-                        Gagal menambahkan obat
+                        ⚠ Gagal menambahkan obat
                     </strong>
 
                     <ul>
@@ -393,9 +833,15 @@
             @endif
 
 
-            <form action="/obat" method="POST">
+            <form action="{{ route('obat.store') }}" method="POST">
 
                 @csrf
+
+
+                <div class="section-title">
+                    Informasi Obat
+                </div>
+
 
                 <div class="form-grid">
 
@@ -404,6 +850,7 @@
 
                         <label>
                             Kode Obat
+                            <span class="required">*</span>
                         </label>
 
                         <input
@@ -424,11 +871,44 @@
                     </div>
 
 
-                    <!-- NAMA -->
+                    <!-- BARCODE -->
                     <div class="form-group">
 
                         <label>
+                            Barcode
+
+                            <span style="font-weight: normal; color: var(--muted-2);">
+                                (opsional)
+                            </span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="barcode"
+                            value="{{ old('barcode') }}"
+                            placeholder="Masukkan barcode jika ada"
+                            class="{{ $errors->has('barcode') ? 'input-error' : '' }}"
+                        >
+
+                        <div class="helper">
+                            Boleh dikosongkan jika obat tidak memiliki barcode.
+                        </div>
+
+                        @error('barcode')
+                            <div class="field-error">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+
+                    <!-- NAMA -->
+                    <div class="form-group full">
+
+                        <label>
                             Nama Obat
+                            <span class="required">*</span>
                         </label>
 
                         <input
@@ -454,11 +934,12 @@
 
                         <label>
                             Kategori
+                            <span class="required">*</span>
                         </label>
 
                         <select
-                            name="kategori"
-                            class="{{ $errors->has('kategori') ? 'input-error' : '' }}"
+                            name="kategori_id"
+                            class="{{ $errors->has('kategori_id') ? 'input-error' : '' }}"
                             required
                         >
 
@@ -466,49 +947,20 @@
                                 -- Pilih Kategori --
                             </option>
 
-                            <option value="Antibiotik"
-                                {{ old('kategori') == 'Antibiotik' ? 'selected' : '' }}>
-                                Antibiotik
-                            </option>
+                            @foreach ($kategori as $item)
 
-                            <option value="Pereda Nyeri"
-                                {{ old('kategori') == 'Pereda Nyeri' ? 'selected' : '' }}>
-                                Pereda Nyeri
-                            </option>
+                                <option
+                                    value="{{ $item->id }}"
+                                    {{ old('kategori_id') == $item->id ? 'selected' : '' }}
+                                >
+                                    {{ $item->nama }}
+                                </option>
 
-                            <option value="Antihistamin"
-                                {{ old('kategori') == 'Antihistamin' ? 'selected' : '' }}>
-                                Antihistamin
-                            </option>
-
-                            <option value="Antasida"
-                                {{ old('kategori') == 'Antasida' ? 'selected' : '' }}>
-                                Antasida
-                            </option>
-
-                            <option value="Vitamin & Suplemen"
-                                {{ old('kategori') == 'Vitamin & Suplemen' ? 'selected' : '' }}>
-                                Vitamin & Suplemen
-                            </option>
-
-                            <option value="Obat Batuk & Flu"
-                                {{ old('kategori') == 'Obat Batuk & Flu' ? 'selected' : '' }}>
-                                Obat Batuk & Flu
-                            </option>
-
-                            <option value="Obat Hipertensi"
-                                {{ old('kategori') == 'Obat Hipertensi' ? 'selected' : '' }}>
-                                Obat Hipertensi
-                            </option>
-
-                            <option value="Obat Diabetes"
-                                {{ old('kategori') == 'Obat Diabetes' ? 'selected' : '' }}>
-                                Obat Diabetes
-                            </option>
+                            @endforeach
 
                         </select>
 
-                        @error('kategori')
+                        @error('kategori_id')
                             <div class="field-error">
                                 {{ $message }}
                             </div>
@@ -517,18 +969,99 @@
                     </div>
 
 
+                    <!-- SATUAN -->
+                    <div class="form-group">
+
+                        <label>
+                            Satuan
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            name="satuan"
+                            class="{{ $errors->has('satuan') ? 'input-error' : '' }}"
+                            required
+                        >
+
+                            <option value="">
+                                -- Pilih Satuan --
+                            </option>
+
+                            <option
+                                value="Tablet"
+                                {{ old('satuan') == 'Tablet' ? 'selected' : '' }}
+                            >
+                                Tablet
+                            </option>
+
+                            <option
+                                value="Kapsul"
+                                {{ old('satuan') == 'Kapsul' ? 'selected' : '' }}
+                            >
+                                Kapsul
+                            </option>
+
+                            <option
+                                value="Botol"
+                                {{ old('satuan') == 'Botol' ? 'selected' : '' }}
+                            >
+                                Botol
+                            </option>
+
+                            <option
+                                value="Box"
+                                {{ old('satuan') == 'Box' ? 'selected' : '' }}
+                            >
+                                Box
+                            </option>
+
+                            <option
+                                value="Strip"
+                                {{ old('satuan') == 'Strip' ? 'selected' : '' }}
+                            >
+                                Strip
+                            </option>
+
+                            <option
+                                value="Pcs"
+                                {{ old('satuan') == 'Pcs' ? 'selected' : '' }}
+                            >
+                                Pcs
+                            </option>
+
+                        </select>
+
+                        @error('satuan')
+                            <div class="field-error">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                </div>
+
+
+                <div class="section-title">
+                    Harga & Stok
+                </div>
+
+
+                <div class="form-grid">
+
                     <!-- HARGA BELI -->
                     <div class="form-group">
 
                         <label>
                             Harga Beli
+                            <span class="required">*</span>
                         </label>
 
                         <input
                             type="number"
                             name="harga_beli"
                             value="{{ old('harga_beli') }}"
-                            placeholder="Contoh: 4000"
+                            placeholder="Contoh: 5000"
                             min="0"
                             class="{{ $errors->has('harga_beli') ? 'input-error' : '' }}"
                             required
@@ -548,13 +1081,14 @@
 
                         <label>
                             Harga Jual
+                            <span class="required">*</span>
                         </label>
 
                         <input
                             type="number"
                             name="harga_jual"
                             value="{{ old('harga_jual') }}"
-                            placeholder="Contoh: 5000"
+                            placeholder="Contoh: 7000"
                             min="0"
                             class="{{ $errors->has('harga_jual') ? 'input-error' : '' }}"
                             required
@@ -574,12 +1108,13 @@
 
                         <label>
                             Stok
+                            <span class="required">*</span>
                         </label>
 
                         <input
                             type="number"
                             name="stok"
-                            value="{{ old('stok') }}"
+                            value="{{ old('stok', 0) }}"
                             placeholder="Contoh: 20"
                             min="0"
                             class="{{ $errors->has('stok') ? 'input-error' : '' }}"
@@ -595,11 +1130,46 @@
                     </div>
 
 
+                    <!-- MINIMUM STOK -->
+                    <div class="form-group">
+
+                        <label>
+                            Minimum Stok
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            name="minimum_stok"
+                            value="{{ old('minimum_stok', 5) }}"
+                            placeholder="Contoh: 5"
+                            min="0"
+                            class="{{ $errors->has('minimum_stok') ? 'input-error' : '' }}"
+                            required
+                        >
+
+                        <div class="helper">
+                            Batas stok sebelum obat dianggap menipis.
+                        </div>
+
+                        @error('minimum_stok')
+                            <div class="field-error">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+
                     <!-- KADALUARSA -->
-                    <div class="form-group full">
+                    <div class="form-group">
 
                         <label>
                             Tanggal Kadaluarsa
+
+                            <span style="font-weight: normal; color: var(--muted-2);">
+                                (opsional)
+                            </span>
                         </label>
 
                         <input
@@ -607,10 +1177,48 @@
                             name="tanggal_kadaluarsa"
                             value="{{ old('tanggal_kadaluarsa') }}"
                             class="{{ $errors->has('tanggal_kadaluarsa') ? 'input-error' : '' }}"
-                            required
                         >
 
                         @error('tanggal_kadaluarsa')
+                            <div class="field-error">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+
+                    <!-- STATUS -->
+                    <div class="form-group">
+
+                        <label>
+                            Status
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            name="status"
+                            class="{{ $errors->has('status') ? 'input-error' : '' }}"
+                            required
+                        >
+
+                            <option
+                                value="aktif"
+                                {{ old('status', 'aktif') == 'aktif' ? 'selected' : '' }}
+                            >
+                                Aktif
+                            </option>
+
+                            <option
+                                value="nonaktif"
+                                {{ old('status') == 'nonaktif' ? 'selected' : '' }}
+                            >
+                                Tidak Aktif
+                            </option>
+
+                        </select>
+
+                        @error('status')
                             <div class="field-error">
                                 {{ $message }}
                             </div>
@@ -624,7 +1232,10 @@
                 <!-- ACTION -->
                 <div class="form-actions">
 
-                    <a href="/obat" class="btn-cancel">
+                    <a
+                        href="{{ route('obat.index') }}"
+                        class="btn-cancel"
+                    >
                         Batal
                     </a>
 
@@ -632,7 +1243,7 @@
                         type="submit"
                         class="btn-save"
                     >
-                        Simpan Obat
+                        💾 Simpan Obat
                     </button>
 
                 </div>
@@ -646,5 +1257,4 @@
 </div>
 
 </body>
-
 </html>

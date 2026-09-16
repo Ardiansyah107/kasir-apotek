@@ -5,42 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Laporan - Apotek Besok Sembuh</title>
+    <title>Admin User - Apotek Besok Sembuh</title>
 
     <style>
+ 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: "Segoe UI", Arial, sans-serif;
         }
 
         :root {
             --bg: #061713;
             --bg-soft: #081d18;
+
             --sidebar: #05120f;
             --sidebar-2: #071b17;
             --sidebar-border: rgba(255, 255, 255, .065);
+
             --surface: #0b211c;
             --surface-2: #0e2923;
             --surface-3: #12332b;
+
             --text: #ecfdf5;
             --text-soft: #c7e5d9;
             --muted: #8baea2;
             --muted-2: #63867b;
+
             --primary: #10b981;
             --primary-light: #34d399;
             --primary-dark: #047857;
+
             --teal: #14b8a6;
             --cyan: #22d3ee;
             --blue: #3b82f6;
             --orange: #f59e0b;
             --red: #ef4444;
             --purple: #a855f7;
+
             --border: rgba(255, 255, 255, .075);
             --border-green: rgba(16, 185, 129, .18);
-            --shadow: 0 10px 35px rgba(0, 0, .18);
-            --shadow-hover: 0 18px 40px rgba(0, 0, .28);
+
+            --shadow: 0 10px 35px rgba(0, 0, 0, .18);
+            --shadow-hover: 0 18px 40px rgba(0, 0, 0, .28);
+
             --radius-sm: 10px;
             --radius-md: 14px;
             --radius-lg: 18px;
@@ -50,40 +59,95 @@
         body {
             min-height: 100vh;
             background:
-                radial-gradient(circle at 85% 0%, rgba(16, 185, 129, .11), transparent 27%),
-                radial-gradient(circle at 15% 100%, rgba(20, 184, 166, .07), transparent 30%),
-                linear-gradient(135deg, var(--bg) 0%, var(--bg-soft) 50%, #061713 100%);
+                radial-gradient(
+                    circle at 85% 0%,
+                    rgba(16, 185, 129, .11),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 15% 100%,
+                    rgba(20, 184, 166, .07),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--bg) 0%,
+                    var(--bg-soft) 50%,
+                    #061713 100%
+                );
             color: var(--text);
         }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* =========================================================
+           LAYOUT
+           ========================================================= */
 
         .layout {
             display: flex;
             min-height: 100vh;
         }
 
-        /* SIDEBAR */
+        /* =========================================================
+           SIDEBAR
+           ========================================================= */
+
         .sidebar {
             width: 255px;
             background:
-                linear-gradient(180deg, var(--sidebar-2) 0%, var(--sidebar) 100%);
+                linear-gradient(
+                    180deg,
+                    var(--sidebar-2) 0%,
+                    var(--sidebar) 100%
+                );
             border-right: 1px solid var(--sidebar-border);
+
             padding: 24px 16px;
+
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
+
             z-index: 100;
-            overflow: hidden;
-            box-shadow: 8px 0 30px rgba(0, 0, .10);
+
+            overflow-y: auto;
+
+            box-shadow:
+                8px 0 30px rgba(0, 0, 0, .10);
         }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, .22);
+            border-radius: 20px;
+        }
+
+        /* =========================================================
+           LOGO
+           ========================================================= */
 
         .logo {
             display: flex;
             align-items: center;
             gap: 11px;
+
             padding: 4px 9px;
             margin-bottom: 34px;
+
             color: var(--text);
+
             font-size: 17px;
             font-weight: 800;
             letter-spacing: -.2px;
@@ -92,18 +156,24 @@
         .logo-icon {
             width: 43px;
             height: 43px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             background:
                 linear-gradient(
                     135deg,
                     var(--primary-light),
                     var(--primary-dark)
                 );
+
             color: white;
+
             border-radius: 13px;
+
             font-size: 21px;
+
             box-shadow:
                 0 8px 25px rgba(16, 185, 129, .20),
                 inset 0 1px 0 rgba(255, 255, 255, .14);
@@ -115,18 +185,29 @@
 
         .logo small {
             display: block;
+
             margin-top: 3px;
+
             color: #63867b;
+
             font-size: 8px;
             font-weight: 600;
+
             letter-spacing: 1.1px;
         }
 
+        /* =========================================================
+           MENU
+           ========================================================= */
+
         .menu-title {
             margin: 23px 10px 9px;
+
             color: #55786e;
+
             font-size: 9px;
             font-weight: 800;
+
             text-transform: uppercase;
             letter-spacing: 1.6px;
         }
@@ -136,17 +217,26 @@
             display: flex;
             align-items: center;
             gap: 12px;
+
             width: 100%;
+
             padding: 11px 13px;
             margin-bottom: 5px;
+
             background: transparent;
+
             border: 1px solid transparent;
             border-radius: 12px;
+
             color: #83a399;
+
             font-size: 13px;
             font-weight: 600;
+
             text-decoration: none;
+
             cursor: pointer;
+
             transition:
                 background .2s ease,
                 color .2s ease,
@@ -157,8 +247,12 @@
         .menu a:hover,
         .menu button:hover {
             background: rgba(16, 185, 129, .065);
-            border-color: rgba(16, 185, 129, .08);
+
+            border-color:
+                rgba(16, 185, 129, .08);
+
             color: #d1fae5;
+
             transform: translateX(3px);
         }
 
@@ -169,20 +263,27 @@
                     rgba(16, 185, 129, .19),
                     rgba(20, 184, 166, .055)
                 );
-            border-color: rgba(16, 185, 129, .17);
+
+            border-color:
+                rgba(16, 185, 129, .17);
+
             color: var(--primary-light);
+
             box-shadow:
                 inset 3px 0 0 var(--primary),
-                0 5px 18px rgba(0, 0, .08);
+                0 5px 18px rgba(0, 0, 0, .08);
         }
 
         .menu-icon {
             width: 25px;
             min-width: 25px;
+
             height: 25px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             font-size: 16px;
         }
 
@@ -190,34 +291,64 @@
             margin: 0;
         }
 
-        /* CONTENT */
+        /* =========================================================
+           CONTENT
+           ========================================================= */
+
         .content {
             margin-left: 255px;
+
             width: calc(100% - 255px);
+
+            padding:
+                30px
+                38px
+                45px;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .content {
+            margin-left: 255px;
+
+            width: calc(100% - 255px);
+
+            min-height: 100vh;
+
             padding: 30px 38px 45px;
         }
+
+        /* TOPBAR */
 
         .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+
+            margin-bottom: 28px;
+
+            gap: 20px;
         }
 
         .page-title h1 {
-            font-size: 27px;
-            margin-bottom: 7px;
+            font-size: 28px;
+
             color: var(--text);
+
+            margin-bottom: 6px;
         }
 
         .page-title p {
             color: var(--muted);
-            font-size: 14px;
+
+            font-size: 13px;
         }
 
         /* =========================================================
            ADMIN PROFILE
-        ========================================================= */
+           ========================================================= */
 
         .admin-wrapper {
             position: relative;
@@ -227,18 +358,29 @@
             display: flex;
             align-items: center;
             gap: 9px;
+
             padding: 7px 10px 7px 7px;
+
             background: rgba(11, 33, 28, .78);
+
             border: 1px solid var(--border);
+
             border-radius: 13px;
+
             cursor: pointer;
+
             box-shadow: var(--shadow);
-            transition: background .2s ease, border-color .2s ease;
+
+            transition:
+                background .2s ease,
+                border-color .2s ease;
         }
 
         .admin:hover {
             background: rgba(14, 41, 35, .95);
-            border-color: rgba(52, 211, 153, .18);
+
+            border-color:
+                rgba(52, 211, 153, .18);
         }
 
         .admin-avatar,
@@ -246,45 +388,59 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
             background:
                 linear-gradient(
                     135deg,
                     var(--primary-light),
                     var(--primary-dark)
                 );
+
             color: white;
+
             font-weight: 800;
-            box-shadow: 0 5px 15px rgba(16, 185, 129, .18);
+
+            box-shadow:
+                0 5px 15px rgba(16, 185, 129, .18);
         }
 
         .admin-avatar {
             width: 38px;
             height: 38px;
+
             border-radius: 11px;
         }
 
         .admin-info {
             display: flex;
             flex-direction: column;
+
             gap: 2px;
+
             text-align: left;
         }
 
         .admin-info strong {
             color: var(--text);
+
             font-size: 12px;
         }
 
         .admin-info span {
             color: #73978c;
+
             font-size: 10px;
         }
 
         .admin-arrow {
             margin-left: 5px;
+
             color: #75988d;
+
             font-size: 12px;
-            transition: transform .2s ease;
+
+            transition:
+                transform .2s ease;
         }
 
         .admin-wrapper.show .admin-arrow {
@@ -293,257 +449,304 @@
 
         .admin-dropdown {
             position: absolute;
+
             top: calc(100% + 10px);
             right: 0;
+
             width: 220px;
+
             padding: 8px;
+
             background:
                 linear-gradient(
                     145deg,
                     rgba(14, 41, 35, .98),
                     rgba(8, 29, 24, .98)
                 );
+
             border: 1px solid var(--border);
+
             border-radius: 14px;
-            box-shadow: 0 18px 45px rgba(0, 0, .30);
+
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, .30);
+
             opacity: 0;
+
             visibility: hidden;
-            transform: translateY(-6px) scale(.98);
+
+            transform:
+                translateY(-6px)
+                scale(.98);
+
             transform-origin: top right;
+
             transition:
                 opacity .18s ease,
                 visibility .18s ease,
                 transform .18s ease;
+
             z-index: 999;
         }
 
         .admin-wrapper.show .admin-dropdown {
             opacity: 1;
+
             visibility: visible;
-            transform: translateY(0) scale(1);
+
+            transform:
+                translateY(0)
+                scale(1);
         }
 
         .dropdown-header {
             display: flex;
             align-items: center;
+
             gap: 10px;
+
             padding: 9px;
         }
 
         .dropdown-avatar {
             width: 36px;
             height: 36px;
+
             border-radius: 10px;
+
             font-size: 13px;
         }
 
         .dropdown-header strong {
             display: block;
+
             color: var(--text);
+
             font-size: 12px;
         }
 
         .dropdown-header span {
             display: block;
+
             margin-top: 2px;
+
             color: var(--muted);
+
             font-size: 10px;
         }
 
         .dropdown-line {
             height: 1px;
+
             margin: 6px 0;
-            background: rgba(255, 255, 255, .06);
+
+            background:
+                rgba(255, 255, 255, .06);
         }
 
         .admin-dropdown a,
         .admin-dropdown form button {
             display: flex;
             align-items: center;
+
             width: 100%;
+
             padding: 10px;
+
             background: transparent;
+
             border: none;
+
             border-radius: 9px;
+
             color: var(--text-soft);
+
             font-size: 11px;
+
             font-weight: 600;
+
             text-decoration: none;
+
             cursor: pointer;
-            transition: background .18s ease, color .18s ease;
+
+            transition:
+                background .18s ease,
+                color .18s ease;
         }
 
         .admin-dropdown a:hover,
         .admin-dropdown form button:hover {
-            background: rgba(16, 185, 129, .08);
-            color: var(--primary-light);
+            background:
+                rgba(16, 185, 129, .08);
+
+            color:
+                var(--primary-light);
         }
 
         .admin-dropdown form {
             margin: 0;
         }
 
-        /* FILTER */
-        .filter-card {
+        /* =========================
+           ALERT
+        ========================= */
+
+        .alert {
+            padding: 13px 16px;
+
+            border-radius: 11px;
+
+            margin-bottom: 18px;
+
+            font-size: 13px;
+
+            border: 1px solid;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, .10);
+
+            color: #6ee7b7;
+
+            border-color: rgba(16, 185, 129, .20);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, .10);
+
+            color: #fca5a5;
+
+            border-color: rgba(239, 68, 68, .20);
+        }
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 20px;
+
+            padding: 22px;
+
             background:
                 linear-gradient(
-                    145deg,
-                    rgba(14, 41, 35, .96),
-                    rgba(11, 33, 28, .96)
+                    135deg,
+                    rgba(14, 41, 35, .95),
+                    rgba(11, 33, 28, .95)
                 );
+
             border: 1px solid var(--border);
+
             border-radius: var(--radius-lg);
-            padding: 20px;
-            margin-bottom: 25px;
+
             box-shadow: var(--shadow);
         }
 
-        .filter-title {
+        .page-header h2 {
+            margin-bottom: 6px;
+
             color: var(--text);
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
+
+            font-size: 18px;
         }
 
-        .filter-form {
-            display: flex;
-            align-items: flex-end;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-
-        .filter-group label {
-            font-size: 12px;
+        .page-header p {
             color: var(--muted);
-            font-weight: bold;
+
+            font-size: 12px;
         }
 
-        .filter-group input {
-            width: 190px;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            outline: none;
-            font-size: 13px;
-            background: var(--surface-2);
-            color: var(--text);
-        }
+        .btn-add {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
 
-        .filter-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, .08);
-        }
+            padding: 11px 17px;
 
-        .btn-filter {
-            padding: 10px 18px;
-            border: 1px solid rgba(16, 185, 129, .25);
-            border-radius: 9px;
             background:
                 linear-gradient(
                     135deg,
                     var(--primary),
                     var(--primary-dark)
                 );
+
             color: white;
-            font-weight: bold;
-            cursor: pointer;
+
+            border: 1px solid rgba(52, 211, 153, .18);
+
+            border-radius: 10px;
+
             font-size: 13px;
-            box-shadow: 0 7px 20px rgba(16, 185, 129, .15);
-        }
+            font-weight: 700;
 
-        .btn-filter:hover {
-            filter: brightness(1.08);
-        }
-
-        .btn-reset {
-            padding: 10px 18px;
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            background: var(--surface-2);
-            color: var(--text-soft);
             text-decoration: none;
-            font-weight: bold;
-            font-size: 13px;
+
+            white-space: nowrap;
+
+            box-shadow:
+                0 8px 20px rgba(16, 185, 129, .14);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
         }
 
-        .btn-reset:hover {
-            background: var(--surface-3);
-            color: var(--text);
-        }
-
-        /* STATISTIK */
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(14, 41, 35, .96),
-                    rgba(11, 33, 28, .96)
-                );
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 22px;
-            box-shadow: var(--shadow);
-            transition: transform .2s ease, box-shadow .2s ease;
-        }
-
-        .stat-card:hover {
+        .btn-add:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
+
+            box-shadow:
+                0 12px 25px rgba(16, 185, 129, .22);
         }
 
-        .stat-label {
-            color: var(--muted);
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
+        /* =========================
+           TABLE
+        ========================= */
 
-        .stat-value {
-            font-size: 25px;
-            font-weight: bold;
-            color: var(--primary-light);
-        }
-
-        /* TABLE */
         .table-card {
             background:
                 linear-gradient(
-                    145deg,
-                    rgba(14, 41, 35, .96),
-                    rgba(11, 33, 28, .96)
+                    135deg,
+                    rgba(11, 33, 28, .98),
+                    rgba(8, 29, 24, .98)
                 );
+
             border: 1px solid var(--border);
+
             border-radius: var(--radius-lg);
-            overflow: hidden;
+
             box-shadow: var(--shadow);
+
+            overflow: hidden;
         }
 
         .table-header {
-            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 18px 20px;
+
             border-bottom: 1px solid var(--border);
         }
 
-        .table-header h2 {
+        .table-header h3 {
             color: var(--text);
-            font-size: 17px;
-            margin-bottom: 6px;
+
+            font-size: 15px;
+
+            margin-bottom: 4px;
         }
 
         .table-header p {
-            font-size: 13px;
             color: var(--muted);
+
+            font-size: 11px;
         }
 
         .table-wrapper {
@@ -552,29 +755,44 @@
 
         table {
             width: 100%;
+
             border-collapse: collapse;
+
+            min-width: 700px;
         }
 
         th {
-            text-align: left;
-            background: rgba(6, 23, 19, .65);
-            color: var(--muted);
-            padding: 13px 15px;
-            font-size: 12px;
+            background: rgba(18, 51, 43, .62);
+
+            color: #789d91;
+
+            font-size: 10px;
+
             text-transform: uppercase;
-            letter-spacing: .4px;
+
+            letter-spacing: .8px;
+
+            text-align: left;
+
+            padding: 14px 18px;
+
             border-bottom: 1px solid var(--border);
         }
 
         td {
-            padding: 15px;
+            padding: 15px 18px;
+
             border-bottom: 1px solid rgba(255, 255, 255, .045);
-            font-size: 14px;
+
             color: var(--text-soft);
+
+            font-size: 13px;
+
+            vertical-align: middle;
         }
 
         tbody tr {
-            transition: background .2s ease;
+            transition: background .15s ease;
         }
 
         tbody tr:hover {
@@ -585,104 +803,177 @@
             border-bottom: none;
         }
 
-        .kode {
-            color: var(--primary-light);
-            font-weight: bold;
+        .number {
+            width: 55px;
+
+            color: var(--muted-2);
+
+            font-weight: 700;
         }
 
-        .jumlah {
-            display: inline-block;
-            background: rgba(255, 255, 255, .055);
-            border: 1px solid var(--border);
-            padding: 5px 9px;
-            border-radius: 7px;
-            color: var(--text-soft);
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .harga {
+        .name-cell {
             color: var(--text);
-            font-weight: bold;
+
+            font-weight: 700;
         }
 
-        .status {
-            display: inline-block;
-            background: rgba(16, 185, 129, .12);
-            border: 1px solid rgba(16, 185, 129, .18);
-            color: var(--primary-light);
-            padding: 6px 10px;
+        .email-cell {
+            color: var(--muted);
+        }
+
+        /* =========================
+           ROLE
+        ========================= */
+
+        .role {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 5px 10px;
+
             border-radius: 20px;
+
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 700;
         }
 
-        .btn-detail {
+        .role-admin {
+            background: rgba(16, 185, 129, .12);
+
+            color: #6ee7b7;
+
+            border: 1px solid rgba(16, 185, 129, .15);
+        }
+
+        .role-kasir {
+            background: rgba(34, 211, 238, .10);
+
+            color: #67e8f9;
+
+            border: 1px solid rgba(34, 211, 238, .14);
+        }
+
+        /* CURRENT USER */
+
+        .current-user {
             display: inline-block;
-            text-decoration: none;
-            background: rgba(16, 185, 129, .09);
-            color: var(--primary-light);
-            border: 1px solid rgba(16, 185, 129, .20);
-            padding: 7px 11px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: bold;
+
+            margin-left: 7px;
+
+            padding: 3px 7px;
+
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, .07);
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            font-weight: 700;
         }
 
-        .btn-detail:hover {
-            background: rgba(16, 185, 129, .16);
-            border-color: rgba(16, 185, 129, .30);
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .actions {
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
         }
+
+        .actions form {
+            margin: 0;
+        }
+
+        .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 7px 11px;
+
+            background: rgba(245, 158, 11, .12);
+
+            color: #fbbf24;
+
+            border: 1px solid rgba(245, 158, 11, .16);
+
+            border-radius: 7px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition: .2s ease;
+        }
+
+        .btn-delete {
+            padding: 7px 11px;
+
+            background: rgba(239, 68, 68, .10);
+
+            color: #f87171;
+
+            border: 1px solid rgba(239, 68, 68, .15);
+
+            border-radius: 7px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .btn-edit:hover {
+            background: rgba(245, 158, 11, .18);
+
+            transform: translateY(-1px);
+        }
+
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, .18);
+
+            transform: translateY(-1px);
+        }
+
+        /* EMPTY */
 
         .empty {
             text-align: center;
+
+            padding: 55px 20px;
+
             color: var(--muted);
-            padding: 40px;
         }
 
-        /* FOOTER */
-        .report-footer {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 30px;
-            padding: 20px 25px;
-            background: rgba(6, 23, 19, .45);
-            border-top: 1px solid var(--border);
+        .empty-icon {
+            font-size: 35px;
+
+            margin-bottom: 10px;
+
+            opacity: .65;
         }
 
-        .footer-label {
-            color: var(--muted);
-            font-size: 14px;
+        .empty p {
+            font-size: 13px;
         }
 
-        .footer-value {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--primary-light);
-        }
+        /* =========================
+           RESPONSIVE
+        ========================= */
 
-        /* RESPONSIVE */
         @media (max-width: 1400px) {
             .content {
                 padding-left: 28px;
                 padding-right: 28px;
-            }
-
-            .stat-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 1150px) {
-            .stat-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 900px) {
-            .stat-grid {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -693,16 +984,16 @@
 
             .content {
                 margin-left: 215px;
+
                 width: calc(100% - 215px);
+
                 padding: 22px;
             }
 
             .page-title h1 {
                 font-size: 23px;
             }
-        }
 
-        @media (max-width: 800px) {
             .admin-info,
             .admin-arrow {
                 display: none;
@@ -713,64 +1004,63 @@
             }
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 600px) {
             .sidebar {
+                width: 72px;
+
+                padding: 20px 9px;
+            }
+
+            .logo {
+                justify-content: center;
+
+                padding: 0;
+            }
+
+            .logo > div:last-child,
+            .menu-title {
                 display: none;
             }
 
+            .menu a,
+            .menu button {
+                justify-content: center;
+
+                padding: 12px 5px;
+            }
+
+            .menu-icon {
+                margin: 0;
+            }
+
             .content {
-                margin-left: 0;
-                width: 100%;
-                padding: 20px;
-            }
+                margin-left: 72px;
 
-            .topbar {
-                align-items: flex-start;
-                gap: 15px;
-            }
+                width: calc(100% - 72px);
 
-            .page-title h1 {
-                font-size: 23px;
-            }
-
-            .filter-form {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .filter-group input {
-                width: 100%;
-            }
-
-            .btn-filter,
-            .btn-reset {
-                text-align: center;
-            }
-
-            .report-footer {
-                justify-content: space-between;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .content {
                 padding: 18px 12px 35px;
             }
 
-            .page-title h1 {
-                font-size: 20px;
+            .topbar {
+                align-items: center;
             }
 
             .page-title p {
                 display: none;
             }
 
-            .filter-card {
-                padding: 16px;
+            .page-title h1 {
+                font-size: 20px;
             }
 
-            .stat-card {
-                padding: 18px;
+            .page-header {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .btn-add {
+                width: 100%;
             }
 
             .table-header {
@@ -783,65 +1073,19 @@
                 padding-right: 14px;
             }
         }
-
-        /* PRINT */
-        @media print {
-            .sidebar,
-            .topbar,
-            .filter-card {
-                display: none;
-            }
-
-            .content {
-                margin-left: 0;
-                width: 100%;
-                padding: 0;
-            }
-
-            body {
-                background: white;
-                color: #111827;
-            }
-
-            .table-card,
-            .stat-card {
-                border: none;
-                box-shadow: none;
-                background: white;
-            }
-
-            .btn-detail {
-                display: none;
-            }
-
-            th {
-                background: #f9fafb;
-                color: #374151;
-            }
-
-            td {
-                color: #111827;
-                border-color: #e5e7eb;
-            }
-
-            .stat-value,
-            .footer-value,
-            .kode {
-                color: #15803d;
-            }
-        }
     </style>
 </head>
 
 <body>
 
-<div class="layout">
-
     <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div class="logo">
-            <div class="logo-icon">✚</div>
+
+            <div class="logo-icon">
+                ✚
+            </div>
 
             <div>
                 <div>
@@ -852,7 +1096,9 @@
                     PHARMACY MANAGEMENT
                 </small>
             </div>
+
         </div>
+
 
         <div class="menu-title">
             Menu Utama
@@ -872,7 +1118,7 @@
                     Data Obat
                 </a>
 
-                <a href="{{ route('users.index') }}">
+                <a href="{{ route('users.index') }}" class="active">
                     <span class="menu-icon">👥</span>
                     Admin User
                 </a>
@@ -901,7 +1147,7 @@
 
             @if(auth()->user()->role === 'admin')
 
-                <a href="{{ route('laporan') }}" class="active">
+                <a href="{{ route('laporan') }}">
                     <span class="menu-icon">📊</span>
                     Laporan Penjualan
                 </a>
@@ -914,6 +1160,7 @@
             @endif
 
         </div>
+
 
         @if(auth()->user()->role === 'admin')
 
@@ -932,9 +1179,11 @@
 
         @endif
 
+
         <div class="menu">
 
             <form action="{{ route('logout') }}" method="POST">
+
                 @csrf
 
                 <button type="submit">
@@ -948,6 +1197,7 @@
 
     </aside>
 
+
     <!-- CONTENT -->
     <main class="content">
 
@@ -957,14 +1207,15 @@
             <div class="page-title">
 
                 <h1>
-                    Laporan
+                    Admin User 👥
                 </h1>
 
                 <p>
-                    Laporan penjualan obat
+                    Kelola akun admin dan kasir.
                 </p>
 
             </div>
+
 
             <!-- ADMIN PROFILE -->
             <div class="admin-wrapper" id="adminWrapper">
@@ -991,14 +1242,12 @@
 
                     </div>
 
-                    <span
-                        class="admin-arrow"
-                        id="adminArrow"
-                    >
+                    <span class="admin-arrow" id="adminArrow">
                         ▾
                     </span>
 
                 </button>
+
 
                 <div
                     class="admin-dropdown"
@@ -1025,7 +1274,9 @@
 
                     </div>
 
+
                     <div class="dropdown-line"></div>
+
 
                     @if(auth()->user()->role === 'admin')
 
@@ -1035,11 +1286,14 @@
 
                     @endif
 
+
                     <a href="{{ route('dashboard') }}">
                         🏠 &nbsp; Dashboard
                     </a>
 
+
                     <div class="dropdown-line"></div>
+
 
                     <form
                         action="{{ route('logout') }}"
@@ -1060,126 +1314,68 @@
 
         </div>
 
-        <!-- FILTER -->
-        <div class="filter-card">
 
-            <div class="filter-title">
-                Filter Laporan
+        <!-- ALERT -->
+        @if(session('success'))
+
+            <div class="alert alert-success">
+                ✓ {{ session('success') }}
             </div>
 
-            <form
-                action="{{ route('laporan') }}"
-                method="GET"
-                class="filter-form"
-            >
+        @endif
 
-                <div class="filter-group">
 
-                    <label for="tanggal_mulai">
-                        Tanggal Mulai
-                    </label>
+        @if(session('error'))
 
-                    <input
-                        type="date"
-                        id="tanggal_mulai"
-                        name="tanggal_mulai"
-                        value="{{ $tanggalMulai ?? '' }}"
-                    >
+            <div class="alert alert-error">
+                ⚠ {{ session('error') }}
+            </div>
 
-                </div>
+        @endif
 
-                <div class="filter-group">
 
-                    <label for="tanggal_selesai">
-                        Tanggal Selesai
-                    </label>
+        <!-- PAGE HEADER -->
+        <div class="page-header">
 
-                    <input
-                        type="date"
-                        id="tanggal_selesai"
-                        name="tanggal_selesai"
-                        value="{{ $tanggalSelesai ?? '' }}"
-                    >
+            <div>
 
-                </div>
+                <h2>
+                    👥 Daftar User
+                </h2>
 
-                <button
-                    type="submit"
-                    class="btn-filter"
-                >
-                    🔍 Filter
-                </button>
+                <p>
+                    Kelola akun yang memiliki akses ke sistem apotek.
+                </p>
 
-                <a
-                    href="{{ route('laporan') }}"
-                    class="btn-reset"
-                >
-                    Reset
-                </a>
+            </div>
 
-            </form>
+
+            <a href="{{ route('users.create') }}" class="btn-add">
+                + Tambah User
+            </a>
 
         </div>
 
-        <!-- STATISTIK -->
-        <div class="stat-grid">
-
-            <div class="stat-card">
-
-                <div class="stat-label">
-                    Total Transaksi
-                </div>
-
-                <div class="stat-value">
-                    {{ $totalTransaksi }}
-                </div>
-
-            </div>
-
-            <div class="stat-card">
-
-                <div class="stat-label">
-                    Total Item Terjual
-                </div>
-
-                <div class="stat-value">
-                    {{ $totalItem }}
-                </div>
-
-            </div>
-
-            <div class="stat-card">
-
-                <div class="stat-label">
-                    Total Pendapatan
-                </div>
-
-                <div class="stat-value">
-                    Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
-                </div>
-
-            </div>
-
-        </div>
 
         <!-- TABLE -->
         <div class="table-card">
 
             <div class="table-header">
 
-                <h2>
-                    Laporan Penjualan
-                </h2>
+                <div>
 
-                <p>
-                    @if ($tanggalMulai || $tanggalSelesai)
-                        Menampilkan transaksi berdasarkan periode yang dipilih
-                    @else
-                        Daftar seluruh transaksi penjualan obat
-                    @endif
-                </p>
+                    <h3>
+                        Data Pengguna
+                    </h3>
+
+                    <p>
+                        Total {{ $users->count() }} user terdaftar
+                    </p>
+
+                </div>
 
             </div>
+
 
             <div class="table-wrapper">
 
@@ -1188,107 +1384,121 @@
                     <thead>
 
                         <tr>
-
-                            <th>
-                                No
-                            </th>
-
-                            <th>
-                                Kode Transaksi
-                            </th>
-
-                            <th>
-                                Tanggal
-                            </th>
-
-                            <th>
-                                Kasir
-                            </th>
-
-                            <th>
-                                Total Item
-                            </th>
-
-                            <th>
-                                Total Pembayaran
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Aksi
-                            </th>
-
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Aksi</th>
                         </tr>
 
                     </thead>
 
+
                     <tbody>
 
-                        @forelse ($transaksi as $index => $item)
+                        @forelse($users as $user)
 
                             <tr>
 
-                                <td>
-                                    {{ $index + 1 }}
+                                <td class="number">
+                                    {{ $loop->iteration }}
                                 </td>
 
-                                <td class="kode">
-                                    {{ $item->kode_transaksi }}
-                                </td>
 
-                                <td>
-                                    {{ $item->created_at->format('d/m/Y H:i') }}
-                                </td>
+                                <td class="name-cell">
 
-                                <td>
-                                    {{ $item->user->name ?? '-' }}
-                                </td>
+                                    {{ $user->name }}
 
-                                <td>
+                                    @if($user->id === Auth::id())
 
-                                    <span class="jumlah">
-                                        {{ $item->detail->sum('jumlah') }} item
-                                    </span>
+                                        <span class="current-user">
+                                            Anda
+                                        </span>
+
+                                    @endif
 
                                 </td>
 
-                                <td class="harga">
-                                    Rp {{ number_format($item->total_harga, 0, ',', '.') }}
+
+                                <td class="email-cell">
+                                    {{ $user->email }}
                                 </td>
+
 
                                 <td>
 
-                                    <span class="status">
-                                        BERHASIL
-                                    </span>
+                                    @if($user->role === 'admin')
+
+                                        <span class="role role-admin">
+                                            🛡️ Admin
+                                        </span>
+
+                                    @else
+
+                                        <span class="role role-kasir">
+                                            🧾 Kasir
+                                        </span>
+
+                                    @endif
 
                                 </td>
 
+
                                 <td>
 
-                                    <a
-                                        href="{{ route('transaksi.detail', $item->id) }}"
-                                        class="btn-detail"
-                                    >
-                                        Lihat Detail
-                                    </a>
+                                    <div class="actions">
+
+                                        <a
+                                            href="{{ route('users.edit', $user->id) }}"
+                                            class="btn-edit"
+                                        >
+                                            ✏ Edit
+                                        </a>
+
+
+                                        @if($user->id !== Auth::id())
+
+                                            <form
+                                                action="{{ route('users.destroy', $user->id) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('Yakin ingin menghapus user ini?');"
+                                            >
+
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button
+                                                    type="submit"
+                                                    class="btn-delete"
+                                                >
+                                                    🗑 Hapus
+                                                </button>
+
+                                            </form>
+
+                                        @endif
+
+                                    </div>
 
                                 </td>
 
                             </tr>
 
+
                         @empty
 
                             <tr>
 
-                                <td
-                                    colspan="8"
-                                    class="empty"
-                                >
-                                    Tidak ada transaksi pada periode yang dipilih.
+                                <td colspan="5" class="empty">
+
+                                    <div class="empty-icon">
+                                        👥
+                                    </div>
+
+                                    <p>
+                                        Belum ada user yang terdaftar.
+                                    </p>
+
                                 </td>
 
                             </tr>
@@ -1301,51 +1511,35 @@
 
             </div>
 
-            <!-- FOOTER -->
-            <div class="report-footer">
-
-                <span class="footer-label">
-                    Total Pendapatan
-                </span>
-
-                <span class="footer-value">
-                    Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
-                </span>
-
-            </div>
-
         </div>
 
     </main>
 
-</div>
 
-<script>
+    <script>
+        function toggleAdminMenu() {
 
-    function toggleAdminMenu() {
+            const wrapper =
+                document.getElementById('adminWrapper');
 
-        const wrapper =
-            document.getElementById('adminWrapper');
-
-        wrapper.classList.toggle('show');
-
-    }
-
-
-    document.addEventListener('click', function(event) {
-
-        const wrapper =
-            document.getElementById('adminWrapper');
-
-        if (!wrapper.contains(event.target)) {
-
-            wrapper.classList.remove('show');
-
+            wrapper.classList.toggle('show');
         }
 
-    });
 
-</script>
+        document.addEventListener('click', function(event) {
+
+            const wrapper =
+                document.getElementById('adminWrapper');
+
+            if (!wrapper.contains(event.target)) {
+
+                wrapper.classList.remove('show');
+
+            }
+
+        });
+    </script>
 
 </body>
+
 </html>

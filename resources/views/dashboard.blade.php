@@ -8,6 +8,10 @@
     <title>Dashboard - Apotek Besok Sembuh</title>
 
     <style>
+        /* =========================================================
+           APOTEK BESOK SEMBUH
+           MASTER DASHBOARD DESIGN
+           ========================================================= */
 
         * {
             margin: 0;
@@ -16,946 +20,1429 @@
             font-family: "Segoe UI", Arial, sans-serif;
         }
 
-        body {
-            background: #f5faf7;
-            color: #1f2937;
+        :root {
+            --bg: #061713;
+            --bg-soft: #081d18;
+
+            --sidebar: #05120f;
+            --sidebar-2: #071b17;
+            --sidebar-border: rgba(255, 255, 255, .065);
+
+            --surface: #0b211c;
+            --surface-2: #0e2923;
+            --surface-3: #12332b;
+
+            --text: #ecfdf5;
+            --text-soft: #c7e5d9;
+            --muted: #8baea2;
+            --muted-2: #63867b;
+
+            --primary: #10b981;
+            --primary-light: #34d399;
+            --primary-dark: #047857;
+
+            --teal: #14b8a6;
+            --cyan: #22d3ee;
+            --blue: #3b82f6;
+            --orange: #f59e0b;
+            --red: #ef4444;
+            --purple: #a855f7;
+
+            --border: rgba(255, 255, 255, .075);
+            --border-green: rgba(16, 185, 129, .18);
+
+            --shadow: 0 10px 35px rgba(0, 0, 0, .18);
+            --shadow-hover: 0 18px 40px rgba(0, 0, 0, .28);
+
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 18px;
+            --radius-xl: 22px;
         }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 85% 0%,
+                    rgba(16, 185, 129, .11),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 15% 100%,
+                    rgba(20, 184, 166, .07),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--bg) 0%,
+                    var(--bg-soft) 50%,
+                    #061713 100%
+                );
+            color: var(--text);
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* =========================================================
+           LAYOUT
+           ========================================================= */
 
         .layout {
             display: flex;
             min-height: 100vh;
         }
 
-
-        /* ================= SIDEBAR ================= */
+        /* =========================================================
+           SIDEBAR
+           ========================================================= */
 
         .sidebar {
-            width: 250px;
-            background: #ffffff;
-            border-right: 1px solid #e4eee8;
+            width: 255px;
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--sidebar-2) 0%,
+                    var(--sidebar) 100%
+                );
+            border-right: 1px solid var(--sidebar-border);
 
-            padding: 25px 18px;
+            padding: 24px 16px;
 
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
 
-            box-shadow: 4px 0 20px rgba(22, 163, 74, 0.04);
-
             z-index: 100;
+
+            overflow-y: auto;
+
+            box-shadow:
+                8px 0 30px rgba(0, 0, 0, .10);
         }
 
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
 
-        /* LOGO */
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, .22);
+            border-radius: 20px;
+        }
+
+        /* =========================================================
+           LOGO
+           ========================================================= */
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 9px;
+            gap: 11px;
 
-            font-size: 20px;
+            padding: 4px 9px;
+            margin-bottom: 34px;
+
+            color: var(--text);
+
+            font-size: 17px;
             font-weight: 800;
-
-            margin-bottom: 38px;
-            padding: 0 10px;
-
-            color: #26352c;
+            letter-spacing: -.2px;
         }
 
         .logo-icon {
-            width: 38px;
-            height: 38px;
+            width: 43px;
+            height: 43px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            background: #dcfce7;
-            color: #16a34a;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    var(--primary-dark)
+                );
 
-            border-radius: 12px;
+            color: white;
 
-            font-size: 22px;
+            border-radius: 13px;
+
+            font-size: 21px;
+
+            box-shadow:
+                0 8px 25px rgba(16, 185, 129, .20),
+                inset 0 1px 0 rgba(255, 255, 255, .14);
         }
 
         .logo span {
-            color: #16a34a;
+            color: var(--primary-light);
         }
 
+        .logo small {
+            display: block;
 
-        /* MENU */
+            margin-top: 3px;
+
+            color: #63867b;
+
+            font-size: 8px;
+            font-weight: 600;
+
+            letter-spacing: 1.1px;
+        }
+
+        /* =========================================================
+           MENU
+           ========================================================= */
 
         .menu-title {
-            font-size: 10px;
-            font-weight: 700;
+            margin: 23px 10px 9px;
 
-            color: #9aaa9f;
+            color: #55786e;
 
-            margin: 24px 10px 10px;
+            font-size: 9px;
+            font-weight: 800;
 
             text-transform: uppercase;
-            letter-spacing: 1.2px;
+            letter-spacing: 1.6px;
         }
 
         .menu a,
         .menu button {
-
             display: flex;
             align-items: center;
-
             gap: 12px;
 
             width: 100%;
 
-            text-decoration: none;
+            padding: 11px 13px;
+            margin-bottom: 5px;
 
-            color: #718078;
+            background: transparent;
 
-            padding: 12px 14px;
-
-            margin-bottom: 6px;
-
+            border: 1px solid transparent;
             border-radius: 12px;
 
-            font-size: 14px;
-            font-weight: 500;
+            color: #83a399;
 
-            border: none;
-            background: none;
+            font-size: 13px;
+            font-weight: 600;
+
+            text-decoration: none;
 
             cursor: pointer;
 
-            transition: 0.2s;
+            transition:
+                background .2s ease,
+                color .2s ease,
+                border .2s ease,
+                transform .2s ease;
         }
 
         .menu a:hover,
         .menu button:hover {
+            background: rgba(16, 185, 129, .065);
 
-            background: #f0fdf4;
+            border-color:
+                rgba(16, 185, 129, .08);
 
-            color: #16a34a;
+            color: #d1fae5;
 
             transform: translateX(3px);
         }
 
         .menu a.active {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(16, 185, 129, .19),
+                    rgba(20, 184, 166, .055)
+                );
 
-            background: #dcfce7;
+            border-color:
+                rgba(16, 185, 129, .17);
 
-            color: #15803d;
+            color: var(--primary-light);
 
-            font-weight: 700;
+            box-shadow:
+                inset 3px 0 0 var(--primary),
+                0 5px 18px rgba(0, 0, 0, .08);
         }
 
         .menu-icon {
             width: 25px;
-            text-align: center;
-            font-size: 17px;
+            min-width: 25px;
+
+            height: 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 16px;
         }
 
         .menu form {
             margin: 0;
         }
 
-
-        /* ================= CONTENT ================= */
+        /* =========================================================
+           CONTENT
+           ========================================================= */
 
         .content {
+            margin-left: 255px;
 
-            margin-left: 250px;
+            width: calc(100% - 255px);
 
-            width: calc(100% - 250px);
-
-            padding: 32px 38px;
+            padding:
+                30px
+                38px
+                45px;
         }
 
-
-        /* ================= TOPBAR ================= */
+        /* =========================================================
+           TOPBAR
+           ========================================================= */
 
         .topbar {
-
             display: flex;
-
+            align-items: center;
             justify-content: space-between;
 
-            align-items: center;
-
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .page-title h1 {
-
-            font-size: 28px;
-
-            font-weight: 750;
-
-            color: #1f2d25;
-
             margin-bottom: 5px;
+
+            color: #f0fdf4;
+
+            font-size: 27px;
+            font-weight: 800;
+
+            letter-spacing: -.6px;
         }
 
         .page-title p {
+            color: var(--muted);
 
-            color: #829087;
-
-            font-size: 14px;
+            font-size: 13px;
         }
 
-
-        /* ================= ADMIN ================= */
+        /* =========================================================
+           USER PROFILE
+           ========================================================= */
 
         .admin-wrapper {
             position: relative;
         }
 
         .admin {
+            display: flex;
+            align-items: center;
+            gap: 10px;
 
-            background: white;
+            padding: 7px 11px 7px 7px;
 
-            padding: 8px 12px 8px 8px;
+            background:
+                rgba(14, 41, 35, .84);
+
+            border:
+                1px solid var(--border);
 
             border-radius: 15px;
 
-            border: 1px solid #e4eee8;
+            color: white;
 
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            box-shadow: 0 5px 18px rgba(0,0,0,0.03);
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, .14);
 
             cursor: pointer;
 
-            transition: 0.2s;
+            transition: .2s ease;
         }
 
         .admin:hover {
+            background: var(--surface-3);
 
-            border-color: #bbf7d0;
-
-            box-shadow:
-                0 8px 22px rgba(22,163,74,0.10);
+            border-color:
+                rgba(16, 185, 129, .30);
 
             transform: translateY(-1px);
         }
 
-        .admin-avatar {
-
-            width: 38px;
-            height: 38px;
+        .admin-avatar,
+        .dropdown-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             background:
                 linear-gradient(
                     135deg,
-                    #bbf7d0,
-                    #dcfce7
+                    var(--primary-light),
+                    var(--primary-dark)
                 );
 
-            color: #15803d;
-
-            border-radius: 12px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
+            color: white;
 
             font-weight: 800;
+
+            box-shadow:
+                0 5px 15px rgba(16, 185, 129, .18);
+        }
+
+        .admin-avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 11px;
         }
 
         .admin-info {
-
             display: flex;
-
             flex-direction: column;
-
             gap: 2px;
 
             text-align: left;
         }
 
         .admin-info strong {
+            color: var(--text);
 
-            font-size: 13px;
-
-            color: #26352c;
+            font-size: 12px;
         }
 
         .admin-info span {
+            color: #73978c;
 
-            font-size: 11px;
-
-            color: #9aaa9f;
+            font-size: 10px;
         }
 
         .admin-arrow {
-
-            color: #8a988f;
-
             margin-left: 5px;
 
-            transition: 0.2s;
+            color: #75988d;
+
+            font-size: 12px;
         }
 
-
-        /* ================= ADMIN DROPDOWN ================= */
+        /* =========================================================
+           DROPDOWN
+           ========================================================= */
 
         .admin-dropdown {
-
             display: none;
 
             position: absolute;
 
+            top: calc(100% + 10px);
             right: 0;
 
-            top: calc(100% + 10px);
-
-            width: 235px;
-
-            background: white;
-
-            border: 1px solid #e4eee8;
-
-            border-radius: 16px;
+            width: 240px;
 
             padding: 10px;
 
+            background:
+                linear-gradient(
+                    145deg,
+                    #102b26,
+                    #0b211c
+                );
+
+            border:
+                1px solid rgba(255, 255, 255, .09);
+
+            border-radius: 16px;
+
             box-shadow:
-                0 15px 35px rgba(0,0,0,0.10);
+                0 22px 50px rgba(0, 0, 0, .38);
 
             z-index: 1000;
-
-            animation: dropdownShow 0.18s ease;
         }
 
         .admin-dropdown.show {
             display: block;
+
+            animation:
+                dropdownIn .16s ease;
         }
 
-        @keyframes dropdownShow {
-
+        @keyframes dropdownIn {
             from {
                 opacity: 0;
-                transform: translateY(-5px);
+                transform: translateY(-6px);
             }
 
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
-
         }
 
         .dropdown-header {
-
             display: flex;
-
             align-items: center;
-
             gap: 10px;
 
             padding: 10px;
         }
 
         .dropdown-avatar {
-
             width: 40px;
             height: 40px;
 
             border-radius: 12px;
-
-            background: #dcfce7;
-
-            color: #15803d;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-weight: 800;
         }
 
         .dropdown-header strong {
-
             display: block;
 
-            font-size: 13px;
+            color: var(--text);
 
-            color: #26352c;
+            font-size: 13px;
         }
 
         .dropdown-header span {
-
             display: block;
 
-            font-size: 11px;
-
-            color: #9aaa9f;
-
             margin-top: 3px;
+
+            color: #789b90;
+
+            font-size: 10px;
         }
 
         .dropdown-line {
-
             height: 1px;
 
-            background: #edf2ee;
-
             margin: 7px 0;
+
+            background:
+                rgba(255, 255, 255, .065);
         }
 
         .admin-dropdown a,
         .admin-dropdown form button {
-
             display: flex;
-
             align-items: center;
 
             width: 100%;
 
             padding: 11px 10px;
 
-            border: none;
-
             background: transparent;
 
+            border: none;
             border-radius: 10px;
 
+            color: #9ab8ae;
+
+            font-size: 12px;
+
+            text-align: left;
             text-decoration: none;
-
-            color: #526158;
-
-            font-size: 13px;
 
             cursor: pointer;
 
-            text-align: left;
-
-            transition: 0.2s;
+            transition: .18s ease;
         }
 
         .admin-dropdown a:hover,
         .admin-dropdown form button:hover {
+            background:
+                rgba(16, 185, 129, .085);
 
-            background: #f0fdf4;
-
-            color: #15803d;
-
-            transform: translateX(2px);
+            color: #86efac;
         }
 
-
-        /* ================= WELCOME ================= */
+        /* =========================================================
+           WELCOME BANNER
+           ========================================================= */
 
         .welcome {
-
             position: relative;
 
             overflow: hidden;
 
+            padding: 32px 34px;
+
+            margin-bottom: 21px;
+
             background:
+                radial-gradient(
+                    circle at 86% 20%,
+                    rgba(255, 255, 255, .15),
+                    transparent 22%
+                ),
                 linear-gradient(
                     135deg,
-                    #22c55e,
-                    #15803d
+                    #159447 0%,
+                    #087d5a 48%,
+                    #075985 100%
                 );
 
-            color: white;
+            border:
+                1px solid rgba(255, 255, 255, .10);
 
-            padding: 28px 32px;
-
-            border-radius: 20px;
-
-            margin-bottom: 24px;
+            border-radius: var(--radius-xl);
 
             box-shadow:
-                0 12px 30px rgba(22, 163, 74, 0.18);
+                0 16px 40px rgba(0, 0, 0, .21),
+                0 12px 30px rgba(16, 185, 129, .10);
         }
 
         .welcome::before {
+            content: "";
 
+            position: absolute;
+
+            width: 210px;
+            height: 210px;
+
+            top: -125px;
+            right: 20px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, .065);
+
+            border:
+                1px solid rgba(255, 255, 255, .05);
+        }
+
+        .welcome::after {
             content: "💊";
 
             position: absolute;
 
-            right: 80px;
+            right: 38px;
+            bottom: -14px;
 
-            top: -18px;
+            font-size: 88px;
 
-            font-size: 85px;
+            opacity: .13;
 
-            opacity: 0.12;
-
-            transform: rotate(-15deg);
-        }
-
-        .welcome::after {
-
-            content: "🌿";
-
-            position: absolute;
-
-            right: 20px;
-
-            bottom: -20px;
-
-            font-size: 75px;
-
-            opacity: 0.12;
-
-            transform: rotate(15deg);
+            transform:
+                rotate(-12deg);
         }
 
         .welcome h2 {
-
-            font-size: 22px;
-
-            margin-bottom: 8px;
-
             position: relative;
-
             z-index: 1;
+
+            margin-bottom: 7px;
+
+            font-size: 23px;
+            font-weight: 800;
+
+            letter-spacing: -.3px;
         }
 
         .welcome p {
-
-            font-size: 14px;
-
-            opacity: 0.92;
-
             position: relative;
-
             z-index: 1;
+
+            font-size: 13px;
+
+            opacity: .88;
         }
 
+        .welcome-badge {
+            position: relative;
+            z-index: 1;
 
-        /* ================= CARDS ================= */
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            margin-top: 16px;
+            padding: 7px 11px;
+
+            background:
+                rgba(255, 255, 255, .12);
+
+            border:
+                1px solid rgba(255, 255, 255, .13);
+
+            border-radius: 20px;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            backdrop-filter: blur(5px);
+        }
+
+        /* =========================================================
+           STATISTIC CARDS
+           ========================================================= */
 
         .cards {
-
             display: grid;
 
             grid-template-columns:
-                repeat(4, 1fr);
+                repeat(5, minmax(0, 1fr));
 
-            gap: 16px;
+            gap: 14px;
 
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .card {
-
             position: relative;
-
-            background: white;
-
-            border: 1px solid #e4eee8;
-
-            border-radius: 18px;
-
-            padding: 20px;
 
             overflow: hidden;
 
-            transition: 0.25s;
+            padding: 18px;
+
+            min-height: 139px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #112f29,
+                    #0b211c
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius-lg);
 
             box-shadow:
-                0 5px 18px rgba(0,0,0,0.025);
+                0 8px 25px rgba(0, 0, 0, .13);
+
+            transition:
+                transform .25s ease,
+                border .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 90px;
+            height: 90px;
+
+            right: -42px;
+            top: -42px;
+
+            border-radius: 50%;
+
+            background:
+                var(--accent, var(--primary));
+
+            opacity: .045;
+        }
+
+        .card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 75px;
+            height: 75px;
+
+            right: -27px;
+            bottom: -33px;
+
+            border-radius: 50%;
+
+            background:
+                var(--accent, var(--primary));
+
+            opacity: .07;
         }
 
         .card:hover {
+            transform: translateY(-5px);
 
-            transform: translateY(-4px);
+            border-color:
+                rgba(255, 255, 255, .13);
 
             box-shadow:
-                0 12px 25px rgba(0,0,0,0.07);
+                var(--shadow-hover);
         }
 
         .card-top {
-
             display: flex;
-
-            justify-content: space-between;
-
             align-items: center;
+            justify-content: space-between;
 
             margin-bottom: 13px;
         }
 
         .card-icon {
-
             width: 42px;
             height: 42px;
 
-            border-radius: 13px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
-            font-size: 20px;
+            border:
+                1px solid rgba(255, 255, 255, .07);
+
+            border-radius: 13px;
+
+            font-size: 19px;
         }
 
         .green {
-            background: #dcfce7;
+            --accent: #22c55e;
+
+            background:
+                rgba(34, 197, 94, .13);
+
+            color: #4ade80;
         }
 
         .blue {
-            background: #dbeafe;
+            --accent: #3b82f6;
+
+            background:
+                rgba(59, 130, 246, .13);
+
+            color: #60a5fa;
         }
 
         .orange {
-            background: #ffedd5;
+            --accent: #f59e0b;
+
+            background:
+                rgba(245, 158, 11, .13);
+
+            color: #fbbf24;
         }
 
         .red {
-            background: #fee2e2;
+            --accent: #ef4444;
+
+            background:
+                rgba(239, 68, 68, .13);
+
+            color: #f87171;
+        }
+
+        .purple {
+            --accent: #a855f7;
+
+            background:
+                rgba(168, 85, 247, .13);
+
+            color: #c084fc;
         }
 
         .card-label {
+            color: #8caea3;
 
-            color: #718078;
-
-            font-size: 13px;
-
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
         }
 
         .card-number {
+            color: #f0fdf4;
 
-            font-size: 27px;
+            font-size: 26px;
+            font-weight: 850;
 
-            font-weight: 800;
+            line-height: 1.15;
 
-            color: #26352c;
+            letter-spacing: -.7px;
         }
 
         .card-info {
+            margin-top: 6px;
 
-            margin-top: 5px;
+            color: #63877c;
 
-            font-size: 12px;
-
-            color: #9aaa9f;
+            font-size: 10px;
+            line-height: 1.45;
         }
 
-
-        /* ================= GRID ================= */
+        /* =========================================================
+           DASHBOARD CONTENT GRID
+           ========================================================= */
 
         .dashboard-grid {
-
             display: grid;
 
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns:
+                minmax(0, 2fr)
+                minmax(300px, 1fr);
 
-            gap: 20px;
+            gap: 17px;
         }
 
-
-        /* ================= PANEL ================= */
+        /* =========================================================
+           PANEL
+           ========================================================= */
 
         .panel {
-
-            background: white;
-
-            border: 1px solid #e4eee8;
-
-            border-radius: 18px;
-
             overflow: hidden;
 
+            background:
+                linear-gradient(
+                    145deg,
+                    #102b26,
+                    #0b211c
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius-lg);
+
             box-shadow:
-                0 5px 18px rgba(0,0,0,0.025);
+                var(--shadow);
         }
 
         .panel-header {
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
 
-            padding: 19px 20px;
+            padding: 18px 20px;
 
             border-bottom:
-                1px solid #edf2ee;
+                1px solid rgba(255, 255, 255, .065);
         }
 
         .panel-header h2 {
+            color: #e8fff2;
 
-            font-size: 16px;
-
-            color: #26352c;
+            font-size: 15px;
+            font-weight: 750;
         }
 
         .panel-header small {
+            padding: 5px 8px;
 
-            color: #9aaa9f;
+            background:
+                rgba(255, 255, 255, .035);
 
-            font-size: 11px;
+            border:
+                1px solid rgba(255, 255, 255, .045);
+
+            border-radius: 7px;
+
+            color: #688b80;
+
+            font-size: 9px;
+            font-weight: 600;
         }
 
+        /* =========================================================
+           TABLE
+           ========================================================= */
 
-        /* ================= TABLE ================= */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .table-wrapper::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, .025);
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, .22);
+            border-radius: 20px;
+        }
 
         table {
-
             width: 100%;
+
+            min-width: 850px;
 
             border-collapse: collapse;
         }
 
         th {
+            padding: 11px 15px;
+
+            background:
+                rgba(255, 255, 255, .022);
+
+            color: #6e9187;
+
+            font-size: 9px;
+            font-weight: 800;
 
             text-align: left;
-
-            background: #f8fbf9;
-
-            color: #829087;
-
-            font-size: 10px;
-
-            padding: 12px 20px;
-
             text-transform: uppercase;
 
-            letter-spacing: 0.5px;
+            letter-spacing: .8px;
+
+            white-space: nowrap;
         }
 
         td {
-
-            padding: 14px 20px;
+            padding: 13px 15px;
 
             border-top:
-                1px solid #f0f3f1;
+                1px solid rgba(255, 255, 255, .043);
 
-            font-size: 13px;
+            color: #a5beb5;
 
-            color: #526158;
+            font-size: 12px;
+
+            white-space: nowrap;
         }
 
         tbody tr {
-
-            transition: 0.2s;
+            transition: .18s ease;
         }
 
         tbody tr:hover {
-
-            background: #f8fdf9;
+            background:
+                rgba(16, 185, 129, .043);
         }
 
         td:first-child {
+            color: var(--primary-light);
 
-            color: #16a34a;
+            font-weight: 750;
+        }
+
+        .medicine-name {
+            color: #dff8eb;
 
             font-weight: 700;
         }
 
+        .barcode {
+            display: block;
 
-        /* ================= CATEGORY ================= */
+            margin-top: 4px;
+
+            color: #62857b;
+
+            font-size: 9px;
+        }
+
+        /* =========================================================
+           CATEGORY
+           ========================================================= */
 
         .category {
-
             display: inline-block;
-
-            background: #f0fdf4;
-
-            color: #15803d;
 
             padding: 5px 9px;
 
+            background:
+                rgba(20, 184, 166, .10);
+
+            border:
+                1px solid rgba(20, 184, 166, .13);
+
             border-radius: 8px;
 
-            font-size: 11px;
+            color: #5eead4;
 
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .unit {
+            color: #b7d1c8;
+
+            font-size: 11px;
             font-weight: 600;
         }
 
+        /* =========================================================
+           STOCK BADGES
+           ========================================================= */
 
-        /* ================= STOK ================= */
-
-        .stok-warning {
-
+        .stok-warning,
+        .stok-menipis,
+        .stok-aman {
             display: inline-block;
-
-            color: #dc2626;
-
-            background: #fee2e2;
 
             padding: 5px 9px;
 
             border-radius: 8px;
 
-            font-weight: 700;
+            font-size: 10px;
+            font-weight: 750;
+        }
 
-            font-size: 12px;
+        .stok-warning {
+            background:
+                rgba(239, 68, 68, .11);
+
+            border:
+                1px solid rgba(239, 68, 68, .13);
+
+            color: #fca5a5;
+        }
+
+        .stok-menipis {
+            background:
+                rgba(245, 158, 11, .11);
+
+            border:
+                1px solid rgba(245, 158, 11, .13);
+
+            color: #fcd34d;
         }
 
         .stok-aman {
+            background:
+                rgba(34, 197, 94, .10);
 
-            display: inline-block;
+            border:
+                1px solid rgba(34, 197, 94, .13);
 
-            color: #15803d;
-
-            background: #dcfce7;
-
-            padding: 5px 9px;
-
-            border-radius: 8px;
-
-            font-weight: 700;
-
-            font-size: 12px;
+            color: #86efac;
         }
 
+        /* =========================================================
+           EXPIRY
+           ========================================================= */
 
-        /* ================= STOCK LIST ================= */
+        .tanggal {
+            margin-bottom: 5px;
 
-        .stock-item {
-
-            padding: 15px 20px;
-
-            border-bottom:
-                1px solid #f0f3f1;
-
-            transition: 0.2s;
-        }
-
-        .stock-item:hover {
-
-            background: #fffafa;
-        }
-
-        .stock-name {
-
-            font-weight: 700;
-
-            font-size: 14px;
-
-            color: #37443c;
-        }
-
-        .stock-code {
+            color: #b7d1c8;
 
             font-size: 11px;
-
-            color: #a0aaa4;
-
-            margin-top: 4px;
         }
 
-        .stock-number {
-
+        .status-expired {
             display: inline-block;
-
-            margin-top: 7px;
-
-            color: #dc2626;
-
-            background: #fee2e2;
 
             padding: 4px 8px;
 
             border-radius: 7px;
 
-            font-weight: 700;
-
-            font-size: 11px;
+            font-size: 9px;
+            font-weight: 800;
         }
 
+        .expired-danger {
+            background:
+                rgba(239, 68, 68, .11);
 
-        /* ================= EMPTY ================= */
+            border:
+                1px solid rgba(239, 68, 68, .13);
 
-        .empty {
+            color: #fca5a5;
+        }
 
-            padding: 38px 20px;
+        .expired-warning {
+            background:
+                rgba(245, 158, 11, .11);
 
-            text-align: center;
+            border:
+                1px solid rgba(245, 158, 11, .13);
 
-            color: #8c9991;
+            color: #fcd34d;
+        }
+
+        .expired-normal {
+            background:
+                rgba(34, 197, 94, .10);
+
+            border:
+                1px solid rgba(34, 197, 94, .13);
+
+            color: #86efac;
+        }
+
+        /* =========================================================
+           STATUS
+           ========================================================= */
+
+        .status-active,
+        .status-inactive {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 8px;
+
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .status-active {
+            background:
+                rgba(34, 197, 94, .10);
+
+            border:
+                1px solid rgba(34, 197, 94, .13);
+
+            color: #86efac;
+        }
+
+        .status-inactive {
+            background:
+                rgba(239, 68, 68, .10);
+
+            border:
+                1px solid rgba(239, 68, 68, .13);
+
+            color: #fca5a5;
+        }
+
+        /* =========================================================
+           LOW STOCK LIST
+           ========================================================= */
+
+        .stock-item {
+            padding: 15px 20px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, .043);
+
+            transition: .18s ease;
+        }
+
+        .stock-item:hover {
+            background:
+                rgba(245, 158, 11, .035);
+        }
+
+        .stock-item:last-child {
+            border-bottom: none;
+        }
+
+        .stock-name {
+            color: #dff8eb;
 
             font-size: 13px;
+            font-weight: 700;
+        }
+
+        .stock-code {
+            margin-top: 4px;
+
+            color: #678b80;
+
+            font-size: 10px;
+        }
+
+        .stock-number,
+        .stock-minimum {
+            display: inline-block;
+
+            margin-top: 7px;
+
+            padding: 4px 8px;
+
+            border-radius: 7px;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .stock-number {
+            background:
+                rgba(245, 158, 11, .10);
+
+            border:
+                1px solid rgba(245, 158, 11, .12);
+
+            color: #fcd34d;
+        }
+
+        .stock-minimum {
+            margin-left: 4px;
+
+            background:
+                rgba(255, 255, 255, .035);
+
+            border:
+                1px solid rgba(255, 255, 255, .055);
+
+            color: #8fb3a8;
+        }
+
+        /* =========================================================
+           EMPTY STATE
+           ========================================================= */
+
+        .empty {
+            padding: 40px 20px;
+
+            color: #6f9187;
+
+            font-size: 12px;
+
+            text-align: center;
         }
 
         .empty-icon {
+            margin-bottom: 9px;
 
-            font-size: 35px;
-
-            margin-bottom: 8px;
+            font-size: 34px;
         }
 
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
 
-        /* ================= RESPONSIVE ================= */
+        @media (max-width: 1400px) {
 
-        @media (max-width: 1100px) {
+            .content {
+                padding-left: 28px;
+                padding-right: 28px;
+            }
 
             .cards {
-
                 grid-template-columns:
-                    repeat(2, 1fr);
+                    repeat(3, minmax(0, 1fr));
+            }
+
+        }
+
+        @media (max-width: 1150px) {
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
             }
 
             .dashboard-grid {
-
                 grid-template-columns: 1fr;
             }
+
         }
 
-        @media (max-width: 750px) {
+        @media (max-width: 800px) {
 
             .sidebar {
-
-                width: 200px;
+                width: 215px;
             }
 
             .content {
+                margin-left: 215px;
 
-                margin-left: 200px;
+                width: calc(100% - 215px);
 
-                width:
-                    calc(100% - 200px);
-
-                padding: 20px;
+                padding: 22px;
             }
 
-            .cards {
-
-                grid-template-columns: 1fr;
-            }
-
-            .topbar {
-
-                align-items: flex-start;
-
-                gap: 15px;
+            .page-title h1 {
+                font-size: 23px;
             }
 
             .admin-info {
-
                 display: none;
             }
+
         }
 
+        @media (max-width: 600px) {
+
+            .sidebar {
+                width: 72px;
+
+                padding:
+                    20px 9px;
+            }
+
+            .logo {
+                justify-content: center;
+
+                padding: 0;
+            }
+
+            .logo > div:last-child,
+            .menu-title {
+                display: none;
+            }
+
+            .menu a,
+            .menu button {
+                justify-content: center;
+
+                padding:
+                    12px 5px;
+            }
+
+            .menu-icon {
+                margin: 0;
+            }
+
+            .content {
+                margin-left: 72px;
+
+                width: calc(100% - 72px);
+
+                padding:
+                    18px 12px 35px;
+            }
+
+            .topbar {
+                align-items: center;
+            }
+
+            .page-title p {
+                display: none;
+            }
+
+            .page-title h1 {
+                font-size: 20px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome {
+                padding: 24px;
+            }
+
+            .welcome h2 {
+                font-size: 19px;
+            }
+
+            .welcome::after {
+                right: 5px;
+
+                font-size: 70px;
+            }
+
+            .panel-header {
+                padding: 16px;
+            }
+
+            th,
+            td {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+        }
     </style>
-
 </head>
-
 
 <body>
 
 <div class="layout">
 
-
-    <!-- ================= SIDEBAR ================= -->
+    <!-- =========================================================
+         SIDEBAR
+         ========================================================= -->
 
     <aside class="sidebar">
 
@@ -966,7 +1453,15 @@
             </div>
 
             <div>
-                <span>Apotek</span> Besok Sembuh
+
+                <div>
+                    <span>Apotek</span> Besok Sembuh
+                </div>
+
+                <small>
+                    PHARMACY MANAGEMENT
+                </small>
+
             </div>
 
         </div>
@@ -979,80 +1474,119 @@
 
         <div class="menu">
 
-            <a href="/dashboard" class="active">
+            <!-- DASHBOARD -->
 
-                <span class="menu-icon">
-                    🏠
-                </span>
-
+            <a
+                href="{{ route('dashboard') }}"
+                class="active"
+            >
+                <span class="menu-icon">🏠</span>
                 Dashboard
-
             </a>
 
 
-            <a href="/obat">
+            @if(auth()->user()->role === 'admin')
 
-                <span class="menu-icon">
-                    💊
-                </span>
+                <!-- DATA OBAT -->
 
-                Data Obat
+                <a href="{{ route('obat.index') }}">
+                    <span class="menu-icon">💊</span>
+                    Data Obat
+                </a>
 
-            </a>
+
+                <!-- ADMIN USER -->
+
+                <a href="{{ route('users.index') }}">
+                    <span class="menu-icon">👥</span>
+                    Admin User
+                </a>
 
 
-            <a href="/kasir">
+                <!-- KATEGORI -->
 
-                <span class="menu-icon">
-                    🛒
-                </span>
+                <a href="{{ route('kategori.index') }}">
+                    <span class="menu-icon">🗂️</span>
+                    Kategori
+                </a>
 
+
+                <!-- STOCK ADJUSTMENT -->
+
+                <a href="{{ route('stock-adjustment.index') }}">
+                    <span class="menu-icon">📦</span>
+                    Stock Adjustment
+                </a>
+
+            @endif
+
+
+            <!-- KASIR -->
+
+            <a href="{{ route('kasir') }}">
+                <span class="menu-icon">🛒</span>
                 Kasir
-
             </a>
 
 
-            <a href="/transaksi">
+            <!-- TRANSAKSI -->
 
-                <span class="menu-icon">
-                    🧾
-                </span>
-
+            <a href="{{ route('transaksi.index') }}">
+                <span class="menu-icon">🧾</span>
                 Transaksi
-
             </a>
 
 
-            <a href="/laporan">
+            @if(auth()->user()->role === 'admin')
 
-                <span class="menu-icon">
-                    📊
-                </span>
+                <!-- LAPORAN PENJUALAN -->
 
-                Laporan
+                <a href="{{ route('laporan') }}">
+                    <span class="menu-icon">📊</span>
+                    Laporan Penjualan
+                </a>
 
-            </a>
+
+                <!-- LAPORAN STOK -->
+
+                <a href="{{ route('laporan.stok') }}">
+                    <span class="menu-icon">📦</span>
+                    Laporan Stok
+                </a>
+
+            @endif
 
         </div>
 
 
-        <div class="menu-title">
-            Pengaturan
-        </div>
+        @if(auth()->user()->role === 'admin')
 
+            <!-- =================================================
+                 PENGATURAN
+                 ================================================= -->
+
+            <div class="menu-title">
+                Pengaturan
+            </div>
+
+
+            <div class="menu">
+
+                <a href="{{ route('pengaturan') }}">
+                    <span class="menu-icon">⚙️</span>
+                    Pengaturan
+                </a>
+
+            </div>
+
+        @endif
+
+
+        <!-- =====================================================
+             LOGOUT
+             ===================================================== -->
 
         <div class="menu">
-
-            <a href="/pengaturan">
-
-                <span class="menu-icon">
-                    ⚙️
-                </span>
-
-                Pengaturan
-
-            </a>
-
 
             <form
                 action="{{ route('logout') }}"
@@ -1078,16 +1612,18 @@
     </aside>
 
 
-
-    <!-- ================= CONTENT ================= -->
+    <!-- =========================================================
+         MAIN CONTENT
+         ========================================================= -->
 
     <main class="content">
 
 
-        <!-- ================= TOPBAR ================= -->
+        <!-- =====================================================
+             TOPBAR
+             ===================================================== -->
 
         <div class="topbar">
-
 
             <div class="page-title">
 
@@ -1095,15 +1631,27 @@
                     Dashboard 👋
                 </h1>
 
-                <p>
-                    Kalo ga sembuh, balik lagi 😎
-                </p>
+
+                @if(auth()->user()->role === 'admin')
+
+                    <p>
+                        Kelola apotek dengan lebih cepat dan mudah.
+                    </p>
+
+                @else
+
+                    <p>
+                        Siap melayani transaksi hari ini 💊
+                    </p>
+
+                @endif
 
             </div>
 
 
-
-            <!-- ================= ADMIN ================= -->
+            <!-- =================================================
+                 USER PROFILE
+                 ================================================= -->
 
             <div class="admin-wrapper">
 
@@ -1127,7 +1675,7 @@
                         </strong>
 
                         <span>
-                            Administrator
+                            {{ ucfirst(Auth::user()->role) }}
                         </span>
 
                     </div>
@@ -1143,8 +1691,9 @@
                 </button>
 
 
-
-                <!-- DROPDOWN -->
+                <!-- =================================================
+                     USER DROPDOWN
+                     ================================================= -->
 
                 <div
                     class="admin-dropdown"
@@ -1167,7 +1716,7 @@
                             </strong>
 
                             <span>
-                                Administrator
+                                {{ ucfirst(Auth::user()->role) }}
                             </span>
 
                         </div>
@@ -1178,17 +1727,17 @@
                     <div class="dropdown-line"></div>
 
 
-                    <a href="/pengaturan">
+                    @if(auth()->user()->role === 'admin')
 
-                        👤 &nbsp; Profil & Pengaturan
+                        <a href="{{ route('pengaturan') }}">
+                            👤 &nbsp; Profil & Pengaturan
+                        </a>
 
-                    </a>
+                    @endif
 
 
-                    <a href="/dashboard">
-
+                    <a href="{{ route('dashboard') }}">
                         🏠 &nbsp; Dashboard
-
                     </a>
 
 
@@ -1203,9 +1752,7 @@
                         @csrf
 
                         <button type="submit">
-
                             🚪 &nbsp; Logout
-
                         </button>
 
                     </form>
@@ -1217,274 +1764,598 @@
         </div>
 
 
-
-        <!-- ================= WELCOME ================= -->
+        <!-- =====================================================
+             WELCOME BANNER
+             ===================================================== -->
 
         <div class="welcome">
 
-            <h2>
-                Selamat Datang di Apotek Besok Sembuh 💊
-            </h2>
+            @if(auth()->user()->role === 'admin')
 
-            <p>
-                Kalo masih belum sembuh, balik lagi 😎
-            </p>
+                <h2>
+                    Selamat Datang, Admin 👋
+                </h2>
+
+                <p>
+                    Semua aktivitas apotek bisa kamu pantau dari sini.
+                </p>
+
+                <div class="welcome-badge">
+                    🟢 Sistem Apotek Aktif
+                </div>
+
+            @else
+
+                <h2>
+                    Selamat Datang, {{ auth()->user()->name }} 👋
+                </h2>
+
+                <p>
+                    Siap melayani transaksi pelanggan hari ini?
+                </p>
+
+                <div class="welcome-badge">
+                    🟢 Kasir Siap Melayani
+                </div>
+
+            @endif
 
         </div>
 
 
-
-        <!-- ================= CARDS ================= -->
+        <!-- =====================================================
+             STATISTIC CARDS
+             ===================================================== -->
 
         <div class="cards">
 
+            @if(auth()->user()->role === 'admin')
 
-            <!-- TOTAL OBAT -->
 
-            <div class="card">
+                <!-- =================================================
+                     TOTAL OBAT
+                     ================================================= -->
 
-                <div class="card-top">
+                <div class="card">
 
-                    <div class="card-label">
-                        Total Obat
+                    <div class="card-top">
+
+                        <div class="card-label">
+                            Total Obat
+                        </div>
+
+                        <div class="card-icon green">
+                            💊
+                        </div>
+
                     </div>
 
-                    <div class="card-icon green">
-                        💊
+                    <div class="card-number">
+                        {{ $totalObat }}
                     </div>
 
-                </div>
-
-
-                <div class="card-number">
-                    {{ $totalObat }}
-                </div>
-
-
-                <div class="card-info">
-                    Jenis obat terdaftar
-                </div>
-
-            </div>
-
-
-
-            <!-- TOTAL STOK -->
-
-            <div class="card">
-
-                <div class="card-top">
-
-                    <div class="card-label">
-                        Total Stok
-                    </div>
-
-                    <div class="card-icon blue">
-                        📦
+                    <div class="card-info">
+                        Jenis obat terdaftar
                     </div>
 
                 </div>
 
 
-                <div class="card-number">
-                    {{ $totalStok }}
-                </div>
+                <!-- =================================================
+                     TOTAL STOK
+                     ================================================= -->
 
+                <div class="card">
 
-                <div class="card-info">
-                    Stok seluruh obat
-                </div>
+                    <div class="card-top">
 
-            </div>
+                        <div class="card-label">
+                            Total Stok
+                        </div>
 
+                        <div class="card-icon blue">
+                            📦
+                        </div>
 
-
-            <!-- STOK MENIPIS -->
-
-            <div class="card">
-
-                <div class="card-top">
-
-                    <div class="card-label">
-                        Stok Menipis
                     </div>
 
-                    <div class="card-icon orange">
-                        ⚠️
+                    <div class="card-number">
+                        {{ number_format($totalStok, 0, ',', '.') }}
                     </div>
 
-                </div>
-
-
-                <div class="card-number">
-                    {{ $stokMenipis }}
-                </div>
-
-
-                <div class="card-info">
-                    Stok &lt; 20
-                </div>
-
-            </div>
-
-
-
-            <!-- STOK HABIS -->
-
-            <div class="card">
-
-                <div class="card-top">
-
-                    <div class="card-label">
-                        Stok Habis
-                    </div>
-
-                    <div class="card-icon red">
-                        🚨
+                    <div class="card-info">
+                        Stok seluruh obat
                     </div>
 
                 </div>
 
 
-                <div class="card-number">
-                    {{ $stokHabis }}
+                <!-- =================================================
+                     STOK MENIPIS
+                     ================================================= -->
+
+                <div class="card">
+
+                    <div class="card-top">
+
+                        <div class="card-label">
+                            Stok Menipis
+                        </div>
+
+                        <div class="card-icon orange">
+                            ⚠️
+                        </div>
+
+                    </div>
+
+                    <div class="card-number">
+                        {{ $stokMenipis }}
+                    </div>
+
+                    <div class="card-info">
+                        Berdasarkan batas minimum obat
+                    </div>
+
                 </div>
 
 
-                <div class="card-info">
-                    Perlu segera restock
+                <!-- =================================================
+                     STOK HABIS
+                     ================================================= -->
+
+                <div class="card">
+
+                    <div class="card-top">
+
+                        <div class="card-label">
+                            Stok Habis
+                        </div>
+
+                        <div class="card-icon red">
+                            🚨
+                        </div>
+
+                    </div>
+
+                    <div class="card-number">
+                        {{ $stokHabis }}
+                    </div>
+
+                    <div class="card-info">
+                        Perlu segera restock
+                    </div>
+
                 </div>
 
-            </div>
+
+                <!-- =================================================
+                     AKAN EXPIRED
+                     ================================================= -->
+
+                <div class="card">
+
+                    <div class="card-top">
+
+                        <div class="card-label">
+                            Akan Expired
+                        </div>
+
+                        <div class="card-icon purple">
+                            ⏳
+                        </div>
+
+                    </div>
+
+                    <div class="card-number">
+                        {{ $akanExpired }}
+                    </div>
+
+                    <div class="card-info">
+                        Expired dalam 30 hari
+                    </div>
+
+                </div>
+
+
+            @else
+
+
+                <!-- =================================================
+                     TRANSAKSI HARI INI
+                     ================================================= -->
+
+                <div class="card">
+
+                    <div class="card-top">
+
+                        <div class="card-label">
+                            Transaksi Hari Ini
+                        </div>
+
+                        <div class="card-icon green">
+                            🧾
+                        </div>
+
+                    </div>
+
+                    <div class="card-number">
+                        {{ $totalTransaksiHariIni }}
+                    </div>
+
+                    <div class="card-info">
+                        Transaksi yang diproses hari ini
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PENDAPATAN
+                     ================================================= -->
+
+                <div class="card">
+
+                    <div class="card-top">
+
+                        <div class="card-label">
+                            Pendapatan Hari Ini
+                        </div>
+
+                        <div class="card-icon blue">
+                            💰
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="card-number"
+                        style="font-size: 20px;"
+                    >
+                        Rp {{ number_format($pendapatanHariIni, 0, ',', '.') }}
+                    </div>
+
+                    <div class="card-info">
+                        Total penjualan hari ini
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     OBAT TERSEDIA
+                     ================================================= -->
+
+                <div class="card">
+
+                    <div class="card-top">
+
+                        <div class="card-label">
+                            Obat Tersedia
+                        </div>
+
+                        <div class="card-icon orange">
+                            💊
+                        </div>
+
+                    </div>
+
+                    <div class="card-number">
+                        {{ $totalObat }}
+                    </div>
+
+                    <div class="card-info">
+                        Jenis obat tersedia
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     STOK MENIPIS
+                     ================================================= -->
+
+                <div class="card">
+
+                    <div class="card-top">
+
+                        <div class="card-label">
+                            Stok Menipis
+                        </div>
+
+                        <div class="card-icon red">
+                            ⚠️
+                        </div>
+
+                    </div>
+
+                    <div class="card-number">
+                        {{ $stokMenipis }}
+                    </div>
+
+                    <div class="card-info">
+                        Berdasarkan batas minimum
+                    </div>
+
+                </div>
+
+            @endif
 
         </div>
 
 
-
-        <!-- ================= BOTTOM ================= -->
+        <!-- =====================================================
+             BOTTOM CONTENT
+             ===================================================== -->
 
         <div class="dashboard-grid">
 
 
-            <!-- ================= OBAT TERBARU ================= -->
+            <!-- =================================================
+                 OBAT TERBARU / DAFTAR OBAT
+                 ================================================= -->
 
             <div class="panel">
-
 
                 <div class="panel-header">
 
                     <h2>
-                        💊 Obat Terbaru
+
+                        @if(auth()->user()->role === 'admin')
+
+                            💊 Obat Terbaru
+
+                        @else
+
+                            💊 Daftar Obat
+
+                        @endif
+
                     </h2>
 
+
                     <small>
-                        Data terbaru
+
+                        @if(auth()->user()->role === 'admin')
+
+                            Data terbaru
+
+                        @else
+
+                            Informasi stok
+
+                        @endif
+
                     </small>
 
                 </div>
 
 
-
                 @if($obatTerbaru->count() > 0)
 
+                    <div class="table-wrapper">
 
-                    <table>
+                        <table>
 
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    Kode
-                                </th>
-
-                                <th>
-                                    Nama Obat
-                                </th>
-
-                                <th>
-                                    Kategori
-                                </th>
-
-                                <th>
-                                    Stok
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-
-                            @foreach($obatTerbaru as $item)
-
+                            <thead>
 
                                 <tr>
 
+                                    <th>
+                                        Kode
+                                    </th>
 
-                                    <td>
-                                        {{ $item->kode_obat }}
-                                    </td>
+                                    <th>
+                                        Nama Obat
+                                    </th>
 
+                                    <th>
+                                        Kategori
+                                    </th>
 
-                                    <td>
-                                        {{ $item->nama_obat }}
-                                    </td>
+                                    <th>
+                                        Satuan
+                                    </th>
 
+                                    <th>
+                                        Stok
+                                    </th>
 
-                                    <td>
+                                    <th>
+                                        Minimum
+                                    </th>
 
-                                        <span class="category">
+                                    <th>
+                                        Kadaluarsa
+                                    </th>
 
-                                            {{ $item->kategori }}
-
-                                        </span>
-
-                                    </td>
-
-
-                                    <td>
-
-
-                                        @if($item->stok == 0)
-
-                                            <span class="stok-warning">
-                                                Habis
-                                            </span>
-
-                                        @elseif($item->stok < 20)
-
-                                            <span class="stok-warning">
-                                                {{ $item->stok }}
-                                            </span>
-
-                                        @else
-
-                                            <span class="stok-aman">
-                                                {{ $item->stok }}
-                                            </span>
-
-                                        @endif
-
-
-                                    </td>
-
+                                    <th>
+                                        Status
+                                    </th>
 
                                 </tr>
 
+                            </thead>
 
-                            @endforeach
+
+                            <tbody>
+
+                                @foreach($obatTerbaru as $item)
+
+                                    <tr>
+
+                                        <!-- KODE -->
+
+                                        <td>
+                                            {{ $item->kode_obat }}
+                                        </td>
 
 
-                        </tbody>
+                                        <!-- NAMA + BARCODE -->
 
-                    </table>
+                                        <td>
 
+                                            <div class="medicine-name">
+                                                {{ $item->nama_obat }}
+                                            </div>
+
+
+                                            @if($item->barcode)
+
+                                                <span class="barcode">
+                                                    Barcode: {{ $item->barcode }}
+                                                </span>
+
+                                            @endif
+
+                                        </td>
+
+
+                                        <!-- KATEGORI -->
+
+                                        <td>
+
+                                            <span class="category">
+                                                {{ $item->kategori }}
+                                            </span>
+
+                                        </td>
+
+
+                                        <!-- SATUAN -->
+
+                                        <td>
+
+                                            <span class="unit">
+                                                {{ $item->satuan }}
+                                            </span>
+
+                                        </td>
+
+
+                                        <!-- STOK -->
+
+                                        <td>
+
+                                            @if($item->stok == 0)
+
+                                                <span class="stok-warning">
+                                                    Habis
+                                                </span>
+
+                                            @elseif($item->stok < $item->minimum_stok)
+
+                                                <span class="stok-menipis">
+                                                    {{ $item->stok }}
+                                                </span>
+
+                                            @else
+
+                                                <span class="stok-aman">
+                                                    {{ $item->stok }}
+                                                </span>
+
+                                            @endif
+
+                                        </td>
+
+
+                                        <!-- MINIMUM -->
+
+                                        <td>
+                                            {{ $item->minimum_stok }}
+                                        </td>
+
+
+                                        <!-- KADALUARSA -->
+
+                                        <td>
+
+                                            @if(!$item->tanggal_kadaluarsa)
+
+                                                <span class="status-expired expired-normal">
+                                                    TIDAK ADA
+                                                </span>
+
+                                            @else
+
+                                                @php
+
+                                                    $tanggalExpired =
+                                                        \Carbon\Carbon::parse(
+                                                            $item->tanggal_kadaluarsa
+                                                        )->startOfDay();
+
+                                                    $hariIni = today();
+
+                                                    $batas30Hari =
+                                                        today()->addDays(30);
+
+                                                @endphp
+
+
+                                                <div class="tanggal">
+
+                                                    {{ $tanggalExpired->format('d/m/Y') }}
+
+                                                </div>
+
+
+                                                @if($tanggalExpired->lt($hariIni))
+
+                                                    <span class="status-expired expired-danger">
+                                                        EXPIRED
+                                                    </span>
+
+                                                @elseif($tanggalExpired->lte($batas30Hari))
+
+                                                    <span class="status-expired expired-warning">
+                                                        SEGERA
+                                                    </span>
+
+                                                @else
+
+                                                    <span class="status-expired expired-normal">
+                                                        AMAN
+                                                    </span>
+
+                                                @endif
+
+                                            @endif
+
+                                        </td>
+
+
+                                        <!-- STATUS -->
+
+                                        <td>
+
+                                            @if($item->status === 'aktif')
+
+                                                <span class="status-active">
+                                                    AKTIF
+                                                </span>
+
+                                            @else
+
+                                                <span class="status-inactive">
+                                                    NONAKTIF
+                                                </span>
+
+                                            @endif
+
+                                        </td>
+
+                                    </tr>
+
+                                @endforeach
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                 @else
-
 
                     <div class="empty">
 
@@ -1496,71 +2367,71 @@
 
                     </div>
 
-
                 @endif
-
 
             </div>
 
 
-
-            <!-- ================= STOK MENIPIS ================= -->
+            <!-- =================================================
+                 STOK MENIPIS
+                 ================================================= -->
 
             <div class="panel">
-
 
                 <div class="panel-header">
 
                     <h2>
-                        ⚠️ Stok Menipis
+
+                        @if(auth()->user()->role === 'admin')
+
+                            ⚠️ Stok Menipis
+
+                        @else
+
+                            ⚠️ Perhatian Stok
+
+                        @endif
+
                     </h2>
 
+
                     <small>
-                        Di bawah 20
+                        Perlu perhatian
                     </small>
 
                 </div>
 
 
-
                 @if($obatMenipis->count() > 0)
-
 
                     @foreach($obatMenipis as $item)
 
-
                         <div class="stock-item">
 
-
                             <div class="stock-name">
-
                                 {{ $item->nama_obat }}
-
                             </div>
 
 
                             <div class="stock-code">
-
                                 {{ $item->kode_obat }}
-
                             </div>
 
 
-                            <div class="stock-number">
-
+                            <span class="stock-number">
                                 Stok: {{ $item->stok }}
+                            </span>
 
-                            </div>
 
+                            <span class="stock-minimum">
+                                Minimum: {{ $item->minimum_stok }}
+                            </span>
 
                         </div>
 
-
                     @endforeach
 
-
                 @else
-
 
                     <div class="empty">
 
@@ -1572,31 +2443,26 @@
 
                         <br>
 
-                        <span style="font-size: 11px;">
-
-                            Tidak ada obat yang perlu direstock.
-
+                        <span style="font-size: 10px;">
+                            Tidak ada obat yang perlu diperhatikan.
                         </span>
 
                     </div>
 
-
                 @endif
-
 
             </div>
 
-
         </div>
-
 
     </main>
 
 </div>
 
 
-
-<!-- ================= JAVASCRIPT ================= -->
+<!-- =========================================================
+     ADMIN DROPDOWN JAVASCRIPT
+     ========================================================= -->
 
 <script>
 
@@ -1625,8 +2491,6 @@
     }
 
 
-    /* Klik di luar dropdown */
-
     document.addEventListener('click', function(event) {
 
         const wrapper =
@@ -1651,7 +2515,6 @@
 
 </script>
 
-
 </body>
-</html>
 
+</html>
